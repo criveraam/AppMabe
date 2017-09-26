@@ -1,9 +1,13 @@
 package com.ti.airmovil.mabe.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -15,7 +19,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ti.airmovil.mabe.Dialog.DialogoDetalle;
 import com.ti.airmovil.mabe.Helper.Config;
 import com.ti.airmovil.mabe.Helper.OnLoadMoreListener;
 import com.ti.airmovil.mabe.Models.ProductosModel;
@@ -64,11 +70,17 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String cadena = lista.get(position).getNombre().substring(0,20);
+        final String cadena = lista.get(position).getNombre().substring(0,20);
         holder.textViewNombre.setText(cadena + "...");
         holder.textViewPrecio.setText(Config.nf.format(Double.parseDouble(lista.get(position).getPrecio())));
         String urlImage = lista.get(position).getImagen();
         new DownloadImageTask((ImageView) holder.imageViewProducto).execute(urlImage);
+
+        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
     }
 
     @Override
@@ -77,11 +89,12 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageViewProducto;
         public TextView textViewNombre, textViewPrecio;
-
+        public ImageView imageViewProducto;
+        public CardView cardViewItem;
         public MyViewHolder(View itemView) {
             super(itemView);
+            cardViewItem = (CardView) itemView.findViewById(R.id.card_view);
             imageViewProducto = (ImageView) itemView.findViewById(R.id.imageView_articulo);
             textViewNombre = (TextView) itemView.findViewById(R.id.textView_nombre_articulo);
             textViewPrecio = (TextView) itemView.findViewById(R.id.textView_precio_articulo);

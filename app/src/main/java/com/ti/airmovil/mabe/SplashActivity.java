@@ -15,6 +15,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimationDown;
         setContentView(R.layout.activity_splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -30,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                     // Comenzara la siguiente Actividad
                     Intent mainIntent = new Intent().setClass(SplashActivity.this, MainActivity.class);
                     startActivity(mainIntent);
+                    //overridePendingTransition(R.anim.anim_up, R.anim.anim_up);
                     // Cierra la actividad para que el usuario no pueda volver atrás
                     // Actividad pulsando el botón Atrás
                     finish();
