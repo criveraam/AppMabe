@@ -1,10 +1,14 @@
 package com.ti.airmovil.mabe.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,31 +16,34 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ti.airmovil.mabe.Helper.Config;
 import com.ti.airmovil.mabe.Helper.OnLoadMoreListener;
 import com.ti.airmovil.mabe.Models.ProductosModel;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ti.airmovil.mabe.R;
+
+import org.w3c.dom.Text;
+
 /**
  * Created by tecnicoairmovil on 25/09/17.
  */
 
-public class ProductosAdapter extends RecyclerView.Adapter{
-
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
+public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyViewHolder>{
+    private List<ProductosModel> lista;
     private Context mContext;
-    private List<ProductosModel> list;
-    private OnLoadMoreListener mOnLoadMoreListener;
-    private boolean isLoading;
-    private int visibleThreshold = 10;
-    private int lastVisibleItem, totalItemCount;
     private RecyclerView mRecyclerView;
 
-    public ProductosAdapter(List<ProductosModel> list) {
+    public ProductosAdapter(Context mContext, List<ProductosModel> lista, RecyclerView mRecyclerView) {
+        this.lista = lista;
         this.mContext = mContext;
-        this.list = list;
         this.mRecyclerView = mRecyclerView;
 
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) this.mRecyclerView.getLayoutManager();
@@ -45,81 +52,64 @@ public class ProductosAdapter extends RecyclerView.Adapter{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                totalItemCount = linearLayoutManager.getItemCount();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-
-                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                    if (mOnLoadMoreListener != null) {
-                        mOnLoadMoreListener.onLoadMore();
-                    }
-                    isLoading = true;
-                }
             }
         });
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder vh;
-
-        if (viewType == VIEW_TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_productos, parent, false);
-            vh = new MyViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.loading, parent, false);
-            vh = new LoadingViewHolder(view);
-        }
-        return vh;
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_productos, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof MyViewHolder) {
-
-            final ProductosModel lista = list.get(position);
-            final MyViewHolder myholder = (MyViewHolder) holder;
-
-            myholder.textViewNombre.setText(lista.getNombre());
-            myholder.textViewPrecio.setText(lista.getPrecio());
-
-        } else {
-            ((LoadingViewHolder) holder).progressBar.setIndeterminate(true);
-        }
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        String cadena = lista.get(position).getNombre().substring(0,20);
+        holder.textViewNombre.setText(cadena + "...");
+        holder.textViewPrecio.setText(Config.nf.format(Double.parseDouble(lista.get(position).getPrecio())));
+        String urlImage = lista.get(position).getImagen();
+        new DownloadImageTask((ImageView) holder.imageViewProducto).execute(urlImage);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return list.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
-    }
-
-    public void setLoaded() {
-        isLoading = false;
-    }
-
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.mOnLoadMoreListener = mOnLoadMoreListener;
-    }
-
-    public static class LoadingViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-        public LoadingViewHolder(View itemView) {
-            super(itemView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.loading);
-        }
+        return lista.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageView;
+        public ImageView imageViewProducto;
         public TextView textViewNombre, textViewPrecio;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            imageViewProducto = (ImageView) itemView.findViewById(R.id.imageView_articulo);
+            textViewNombre = (TextView) itemView.findViewById(R.id.textView_nombre_articulo);
+            textViewPrecio = (TextView) itemView.findViewById(R.id.textView_precio_articulo);
+        }
+    }
 
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }

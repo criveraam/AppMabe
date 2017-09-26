@@ -11,14 +11,6 @@ public class ProductosModel {
     public String detalle;
     public String imagen;
 
-    public ProductosModel(String titulo, String nombre, String precio, String detalle, String imagen) {
-        this.titulo = titulo;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.detalle = detalle;
-        this.imagen = imagen;
-    }
-
     public String getTitulo() {
         return titulo;
     }

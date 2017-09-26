@@ -1,12 +1,14 @@
 package com.ti.airmovil.mabe.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ti.airmovil.mabe.Models.ProductosModel;
 import com.ti.airmovil.mabe.Models.Test;
 import com.ti.airmovil.mabe.R;
 
@@ -16,43 +18,36 @@ import java.util.List;
  * Created by tecnicoairmovil on 25/09/17.
  */
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>{
-    private List<Test> testList;
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.PersonViewHolder>{
+    private List<ProductosModel> lista;
     private Context context;
     private LayoutInflater inflater;
 
-    public MyRecyclerAdapter(List<Test> testList, Context context) {
-        this.testList = testList;
-        this.context = context;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-    }
-
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = inflater.inflate(R.layout.list_productos, parent, false);
-        return new MyViewHolder(rootView);
+    public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return null;
     }
-
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Test tests = testList.get(position);
-        //Pass the values of feeds object to Views
-        holder.title.setText(tests.getName());
-        holder.content.setText(tests.getName());
+    public void onBindViewHolder(PersonViewHolder holder, int position) {
+
     }
 
     @Override
     public int getItemCount() {
-        return testList.size();
+        return 0;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView content, title;
-        public MyViewHolder(View itemView) {
+
+    public static class PersonViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView personName;
+        TextView personAge;
+
+        PersonViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.textView_nombre_articulo);
-            content = (TextView) itemView.findViewById(R.id.textView_precio_articulo);
+            cv = (CardView)itemView.findViewById(R.id.card_view);
+            personName = (TextView)itemView.findViewById(R.id.textView_nombre_articulo);
+            personAge = (TextView)itemView.findViewById(R.id.textView_precio_articulo);
         }
     }
 
