@@ -18,4 +18,89 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <!-- APP TOOLBAR COLAPSE LAYOUT-->
+    <style name="toolbarCollapse">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <!-- DISEÑO DEL LAYOUT-->
+    <style name="layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+    </style>
+
+    <style name="layout_separador">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="texto_h1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textColor">#0b2844</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="texto_h2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textColor">#1a8d93</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="texto_h3">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textColor">#16d9e0</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="texto_h4">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textColor">#2a79d3</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="texto_h5">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:textColor">#4a90db</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="separador_vertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40px</item>
+    </style>
+
+    <style name="FabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:src">@drawable/logo</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">6dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
+
 </resources>
