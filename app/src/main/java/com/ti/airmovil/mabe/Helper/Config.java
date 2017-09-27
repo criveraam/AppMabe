@@ -12,6 +12,8 @@ import java.util.Locale;
 public class Config {
     public static final String URL_GENERAL = "http://5piso.com/";
     public static final String URL_PRODUCTOS = URL_GENERAL + "~walmart/servicios/getProductosPadre.php";
+    public static final String URL_DETALLE_PRODUCTO = URL_GENERAL + "~walmart/servicios/getProductoDetalle.php";
     public static final NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
+    public static String imagenDetalle = "";
     public static RequestQueue mRequestQueue = null;
 }

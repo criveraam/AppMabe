@@ -1,5 +1,6 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -218,6 +219,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.menu_filtro:
+                startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
+                return true;
             case R.id.menu_columnas:
                 checkListOrColumns = true;
                 columns(2);

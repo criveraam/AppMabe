@@ -31,7 +31,13 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".Activities.TestActivity">
+        <activity android:name=".Activities.TestActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity android:name=".Activities.FiltroActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
     </application>
