@@ -18,6 +18,16 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_up</item>
+        <item name="android:windowExitAnimation">@anim/anim_down</item>
+    </style>
+
+    <style name="DialogAnimationDown">
+        <item name="android:windowEnterAnimation">@anim/anim_down</item>
+        <item name="android:windowExitAnimation">@anim/anim_up</item>
+    </style>
+
     <!-- APP TOOLBAR COLAPSE LAYOUT-->
     <style name="toolbarCollapse">
         <item name="android:layout_width">match_parent</item>

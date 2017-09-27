@@ -1,18 +1,13 @@
-package com.ti.airmovil.mabe;
+package com.ti.airmovil.mabe.Activities;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,28 +17,20 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ti.airmovil.mabe.Adapters.MyRecyclerAdapter;
 import com.ti.airmovil.mabe.Adapters.ProductosAdapter;
 import com.ti.airmovil.mabe.Helper.Config;
-import com.ti.airmovil.mabe.Helper.InterfaceResults;
-import com.ti.airmovil.mabe.Helper.NetworkController;
-import com.ti.airmovil.mabe.Helper.VolleySingleton;
 import com.ti.airmovil.mabe.Models.ProductosModel;
-import com.ti.airmovil.mabe.Models.Test;
+import com.ti.airmovil.mabe.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,9 +38,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -71,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         requestQueue= Volley.newRequestQueue(getApplicationContext());
 
@@ -103,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(val, dpToPx(10), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(val, dpToPx(0), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }

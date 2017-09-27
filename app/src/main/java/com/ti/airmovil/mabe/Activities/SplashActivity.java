@@ -1,10 +1,11 @@
-package com.ti.airmovil.mabe;
+package com.ti.airmovil.mabe.Activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.ti.airmovil.mabe.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimationDown;
+        //getWindow().getAttributes().windowAnimations = R.style.DialogAnimationDown;
         setContentView(R.layout.activity_splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -39,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             };
             // Simula un proceso de carga largo en el asesor_fragmento_inicio de la aplicación.
             Timer timer = new Timer();
-            timer.schedule(task, 3000);
+            timer.schedule(task, 2000);
         }
     }
 }

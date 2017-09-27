@@ -5,38 +5,24 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.ti.airmovil.mabe.Dialog.DialogoDetalle;
 import com.ti.airmovil.mabe.Helper.Config;
-import com.ti.airmovil.mabe.Helper.OnLoadMoreListener;
 import com.ti.airmovil.mabe.Models.ProductosModel;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ti.airmovil.mabe.R;
-
-import org.w3c.dom.Text;
+import com.ti.airmovil.mabe.Activities.TestActivity;
 
 /**
  * Created by tecnicoairmovil on 25/09/17.
@@ -79,6 +65,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
         holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.getContext().startActivity(new Intent(view.getContext(), TestActivity.class));
             }
         });
     }

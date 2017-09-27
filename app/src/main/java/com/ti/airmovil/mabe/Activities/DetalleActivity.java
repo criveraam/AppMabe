@@ -1,15 +1,13 @@
-package com.ti.airmovil.mabe;
+package com.ti.airmovil.mabe.Activities;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.ti.airmovil.mabe.R;
 
 public class DetalleActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
