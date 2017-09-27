@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ti.airmovil.mabe.Activities.FiltroActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo"/>
+
+                <LinearLayout
+                    style="@style/layout_separador"
+                    android:layout_weight = "1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/texto_h2"
+                        android:layout_weight="1"
+                        android:text="Porcentaje: "/>
+                    <Spinner
+                        android:id="@+id/sPorcentaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_separador"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView style="@style/texto_h2"
+                        android:layout_weight="1"
+                        android:text="Correo: "/>
+                    <Spinner android:id="@+id/sCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_separador"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/texto_h2"
+                        android:text="Grado Gravedad"
+                        android:layout_weight="1"/>
+
+                    <Spinner
+                        android:id="@+id/sGravedad"
+                        style="@style/layout_separador"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/btnEnviarCorreo"
+                    style="@style/button"
+                    android:text="Enviar Correo"/>
+
+                
+            </LinearLayout>
+
+        </ScrollView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
