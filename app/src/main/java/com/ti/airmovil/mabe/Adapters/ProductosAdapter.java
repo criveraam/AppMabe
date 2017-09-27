@@ -7,20 +7,25 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ti.airmovil.mabe.Activities.DetalleActivity;
 import com.ti.airmovil.mabe.Helper.Config;
 import com.ti.airmovil.mabe.Models.ProductosModel;
 
 import java.io.InputStream;
 import java.util.List;
 
+import com.ti.airmovil.mabe.Models.Test;
 import com.ti.airmovil.mabe.R;
 import com.ti.airmovil.mabe.Activities.TestActivity;
 
@@ -29,6 +34,7 @@ import com.ti.airmovil.mabe.Activities.TestActivity;
  */
 
 public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyViewHolder>{
+    private static final String TAG = ProductosAdapter.class.getSimpleName();
     private List<ProductosModel> lista;
     private Context mContext;
     private RecyclerView mRecyclerView;
@@ -55,17 +61,30 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        final String cadena = lista.get(position).getNombre().substring(0,20);
-        holder.textViewNombre.setText(cadena + "...");
-        holder.textViewPrecio.setText(Config.nf.format(Double.parseDouble(lista.get(position).getPrecio())));
-        String urlImage = lista.get(position).getImagen();
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        final ProductosModel lists = lista.get(position);
+        //final String cadena = lista.get(position).getNombre().substring(0,20);
+        holder.textViewNombre.setText(lists.getNombre());
+        holder.textViewPrecio.setText(Config.nf.format(Double.parseDouble(lists.getPrecio())));
+        holder.textViewNumerador.setText(String.valueOf(position + 1));
+        String urlImage = lists.getImagen();
         new DownloadImageTask((ImageView) holder.imageViewProducto).execute(urlImage);
 
-        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
+        holder.imageViewProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.getContext().startActivity(new Intent(view.getContext(), TestActivity.class));
+                Intent intent = new Intent(view.getContext(), TestActivity.class);
+                intent.putExtra("id_producto", lists.getIdProducto());
+                view.getContext().startActivity(intent);
+            }
+        });
+
+        holder.imageViewSubmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), TestActivity.class);
+                intent.putExtra("id_producto", lists.getIdProducto());
+                view.getContext().startActivity(intent);
             }
         });
     }
@@ -75,16 +94,19 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
         return lista.size();
     }
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView textViewNombre, textViewPrecio;
-        public ImageView imageViewProducto;
+        public TextView textViewNombre, textViewPrecio, textViewNumerador;
+        public ImageView imageViewProducto, imageViewSubmenu;
         public CardView cardViewItem;
         public MyViewHolder(View itemView) {
             super(itemView);
             cardViewItem = (CardView) itemView.findViewById(R.id.card_view);
             imageViewProducto = (ImageView) itemView.findViewById(R.id.imageView_articulo);
+            imageViewSubmenu = (ImageView) itemView.findViewById(R.id.imageView_submenu);
             textViewNombre = (TextView) itemView.findViewById(R.id.textView_nombre_articulo);
             textViewPrecio = (TextView) itemView.findViewById(R.id.textView_precio_articulo);
+            textViewNumerador = (TextView) itemView.findViewById(R.id.textView_numerador);
         }
     }
 

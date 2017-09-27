@@ -6,11 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="MY.DIALOG" parent="android:Theme">
@@ -26,6 +28,10 @@
     <style name="DialogAnimationDown">
         <item name="android:windowEnterAnimation">@anim/anim_down</item>
         <item name="android:windowExitAnimation">@anim/anim_up</item>
+    </style>
+    <style name="DialogAnimationLeft">
+        <item name="android:windowEnterAnimation">@anim/anim_left</item>
+        <item name="android:windowExitAnimation">@anim/anim_right</item>
     </style>
 
     <!-- APP TOOLBAR COLAPSE LAYOUT-->

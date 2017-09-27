@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="1dp"
-        android:elevation="2dp"
+        android:layout_margin="5dp"
+        android:elevation="5dp"
         card_view:cardCornerRadius="1dp">
 
         <LinearLayout
@@ -17,15 +17,29 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView_precio_articulo"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Precio"
-                android:textColor="@color/colorAccent"
-                android:padding="10dp"
-                android:textSize="14dp"/>
+                android:padding="3dp">
+                <TextView
+                    android:id="@+id/textView_numerador"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/style_circle"
+                    android:text=""
+                    android:gravity="center_horizontal|center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+                <TextView
+                    android:id="@+id/textView_precio_articulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Precio"
+                    android:textColor="@color/colorAccent"
+                    android:padding="10dp"
+                    android:textSize="14dp"/>
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageView_articulo"
@@ -38,25 +52,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:padding="10dp">
                 <TextView
                     android:id="@+id/textView_nombre_articulo"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:maxLines="2"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Texto de prueba de informacion "
-                    android:textSize="14dp" />
+                    android:textSize="10dp" />
                 <ImageView
+                    android:id="@+id/imageView_submenu"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-
-                    android:src="@drawable/ic_more_vert"/>
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_keyboard_arrow_up"/>
+                <!--  -->
             </LinearLayout>
-
 
         </LinearLayout>
 

@@ -10,6 +10,15 @@ public class ProductosModel {
     public String precio;
     public String detalle;
     public String imagen;
+    public String idProducto;
+
+    public String getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(String idProducto) {
+        this.idProducto = idProducto;
+    }
 
     public String getTitulo() {
         return titulo;

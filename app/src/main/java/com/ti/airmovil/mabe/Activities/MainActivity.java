@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         requestQueue= Volley.newRequestQueue(getApplicationContext());
 
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 ProductosModel getDatos2 = new ProductosModel();
                 jsonObject = obj.getJSONObject(i);
                 try{
+                    getDatos2.setIdProducto(jsonObject.getString("id_crawler"));
                     getDatos2.setNombre(jsonObject.getString("titulo"));
                     getDatos2.setPrecio(jsonObject.getString("precio"));
                     getDatos2.setImagen(jsonObject.getString("imagen"));
@@ -173,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
         private boolean includeEdge;
 
         public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            Log.d("--> data: ", spanCount + ", " + spacing + ", " + includeEdge);
             this.spanCount = spanCount;
             this.spacing = spacing;
             this.includeEdge = includeEdge;
@@ -183,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             int position = parent.getChildAdapterPosition(view); // item position
             int column = position % spanCount; // item column
-            Log.d(TAG, "POSITION::: " + position + "\nColumn:::" + column);
             if (includeEdge) {
                 outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
                 outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
@@ -211,13 +210,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_option, menu);
+        //menu.getItem(1).setVisible(false);
         return true;
     }
 
+    public boolean checkListOrColumns = false;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_columnas:
+                checkListOrColumns = true;
                 columns(2);
                 return true;
             case R.id.menu_lista:

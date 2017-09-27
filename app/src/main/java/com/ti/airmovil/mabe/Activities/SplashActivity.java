@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().getAttributes().windowAnimations = R.style.DialogAnimationDown;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         setContentView(R.layout.activity_splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             };
             // Simula un proceso de carga largo en el asesor_fragmento_inicio de la aplicación.
             Timer timer = new Timer();
-            timer.schedule(task, 2000);
+            timer.schedule(task, 3000);
         }
     }
 }
