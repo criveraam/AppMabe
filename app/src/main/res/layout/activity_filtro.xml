@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ti.airmovil.mabe.Activities.FiltroActivity">
+    tools:context="com.ti.airmovil.mabe.Activities.FiltroActivity"
+    android:id="@+id/layoutrFiltro">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,44 +34,47 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/logo"/>
+                    android:src="@drawable/logo" />
 
                 <LinearLayout
                     style="@style/layout_separador"
-                    android:layout_weight = "1"
+                    android:layout_weight="2"
                     android:orientation="horizontal">
 
                     <TextView
                         style="@style/texto_h2"
-                        android:layout_weight="1"
-                        android:text="Porcentaje: "/>
-                    <Spinner
-                        android:id="@+id/sPorcentaje"
+                        android:layout_weight="4"
+                        android:text="Porcentaje: " />
+                    <TextView
+                        android:id="@+id/tvPorcentaje"
+                        style="@style/texto_h2"
+                        android:layout_weight="4"
+                        android:text="10%" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_separador"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/sSeekBarPorcentaje"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/layout_separador"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView style="@style/texto_h2"
-                        android:layout_weight="1"
-                        android:text="Correo: "/>
-                    <Spinner android:id="@+id/sCorreo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:background="@drawable/sin_esquinas"
+                        android:indeterminate="false"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:max="100"
+                        android:progress="10" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -80,8 +84,25 @@
 
                     <TextView
                         style="@style/texto_h2"
-                        android:text="Grado Gravedad"
-                        android:layout_weight="1"/>
+                        android:layout_weight="2"
+                        android:text="Correo: " />
+
+                    <Spinner
+                        android:id="@+id/sCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_separador"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/texto_h2"
+                        android:text="Grado Gravedad:"
+                        android:layout_weight="2"/>
 
                     <Spinner
                         android:id="@+id/sGravedad"
@@ -89,22 +110,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
-
                 </LinearLayout>
 
 
                 <Button
                     android:id="@+id/btnEnviarCorreo"
                     style="@style/button"
-                    android:text="Enviar Correo"/>
+                    android:text="Aplicar Filtro" />
 
-                
+                <Button
+                    android:id="@+id/btnOmitirFiltro"
+                    style="@style/button"
+                    android:text="Omitir Filtro" />
+
+
             </LinearLayout>
 
         </ScrollView>
 
     </android.support.v4.widget.NestedScrollView>
-
 
 
 </android.support.design.widget.CoordinatorLayout>
