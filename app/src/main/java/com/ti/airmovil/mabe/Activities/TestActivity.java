@@ -54,11 +54,15 @@ public class TestActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
         imageViewProducto = (ImageView) findViewById(R.id.imageView_producto);
         textViewDescripcion = (TextView) findViewById(R.id.textView_descripcion);
         textViewPrecio = (TextView) findViewById(R.id.textView_precio);
         textViewTitulo = (TextView) findViewById(R.id.textView_titulo);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_detalle);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("id_producto")!= null)
