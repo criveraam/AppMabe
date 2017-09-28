@@ -1,5 +1,6 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,12 +10,16 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -43,8 +48,14 @@ public class TestActivity extends AppCompatActivity {
     private String idProducto;
     private String imageEnvio;
     private ImageView imageViewProducto;
-    private TextView textViewPrecio, textViewDescripcion, textViewTitulo;
+    private TextView textViewTitulo1, textViewTitulo2, textViewTitulo3;
+    private ImageView imageViewIcon1, imageViewIcon2, imageViewIcon3;
+    private TextView textViewPrecio1, textViewPrecio2,textViewPrecio3, textViewDescripcion, textViewTitulo;
     private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbar;
+    private AppBarLayout appBarLayout;
+    private LinearLayout linearLayoutInfo;
+    private Button buttonCerrar;
     boolean banderaFoto = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,28 +68,51 @@ public class TestActivity extends AppCompatActivity {
         //toolbar = (Toolbar) findViewById(R.id.toolbar);
         imageViewProducto = (ImageView) findViewById(R.id.imageView_producto);
         textViewDescripcion = (TextView) findViewById(R.id.textView_descripcion);
-        textViewPrecio = (TextView) findViewById(R.id.textView_precio);
+        textViewPrecio1 = (TextView) findViewById(R.id.textView_precio1);
+        textViewPrecio2 = (TextView) findViewById(R.id.textView_precio2);
+        textViewPrecio3 = (TextView) findViewById(R.id.textView_precio3);
+        textViewTitulo1 = (TextView) findViewById(R.id.textView_tienda1);
+        textViewTitulo2 = (TextView) findViewById(R.id.textView_tienda2);
+        textViewTitulo3 = (TextView) findViewById(R.id.textView_tienda3);
+        imageViewIcon1 = (ImageView) findViewById(R.id.imageView_icon1);
+        imageViewIcon2 = (ImageView) findViewById(R.id.imageView_icon2);
+        imageViewIcon3 = (ImageView) findViewById(R.id.imageView_icon3);
         textViewTitulo = (TextView) findViewById(R.id.textView_titulo);
+        buttonCerrar = (Button) findViewById(R.id.button_regresar);
         toolbar = (Toolbar) findViewById(R.id.toolbar_detalle);
+        linearLayoutInfo = (LinearLayout) findViewById(R.id.linearlayout_info);
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(" ");
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        appBarLayout.setExpanded(true);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle.getString("id_producto")!= null)
-            idProducto =bundle.getString("id_producto");
+        if(bundle.getString("id_producto")!= null){
+            idProducto = bundle.getString("id_producto");
+            Log.e(TAG, "Parametro obtenido del envio a esta actividad ::: " + idProducto);
+        }
 
         getData();
         initCollapsingToolbar();
 
-        imageViewProducto.setOnClickListener(new View.OnClickListener() {
+        linearLayoutInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager1 = getSupportFragmentManager();
-                DialogoDetalle d1 = new DialogoDetalle();
-                d1.show(fragmentManager1, "txt_login");
+                appBarLayout.setExpanded(false);
             }
         });
+
+        buttonCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                returnActivity();
+            }
+        });
+
+
     }
 
     private void getData(){
@@ -98,11 +132,29 @@ public class TestActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id_crowler", "4");
+                params.put("id_crowler", idProducto);
                 return params;
             }
         };
         queue.add(stringRequest);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            returnActivity();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void returnActivity(){
+        Intent i= new Intent(this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+        finish();
     }
 
     private void parseResponse(String response){
@@ -112,12 +164,18 @@ public class TestActivity extends AppCompatActivity {
             String titulo = obj.getString("titulo");
             String descripcion = obj.getString("descripcion");
             String imagen = obj.getString("imagen");
-            String precio = obj.getString("precio");
+            String precio_mabe = obj.getString("precio_mabe");
+            String precio_walmart = obj.getString("precio_walmart");
+            String precio_bestbuy = obj.getString("precio_bestbuy");
 
             textViewTitulo.setText(titulo);
             textViewDescripcion.setText(descripcion);
-            textViewPrecio.setText(Config.nf.format(Double.parseDouble(precio)));
-            Config.imagenDetalle = imagen;
+            textViewPrecio1.setText(Config.nf.format(Double.parseDouble(precio_mabe)));
+            textViewPrecio2.setText(Config.nf.format(Double.parseDouble(precio_walmart)));
+            textViewPrecio3.setText(Config.nf.format(Double.parseDouble(precio_bestbuy)));
+
+            //Config.imagenDetalle = imagen;
+            Log.e(TAG, "IMAGEN A MOSTRAT EN COLLAPSING::: " + imagen);
             new DownloadImageTask((ImageView) imageViewProducto).execute(imagen);
         } catch (JSONException e) {
             Log.e(TAG, "errores");
@@ -126,13 +184,6 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void initCollapsingToolbar(){
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(" ");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.setExpanded(true);
-
-        // hiding & showing the title when toolbar expanded & collapsed
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;

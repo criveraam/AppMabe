@@ -73,6 +73,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
         holder.imageViewProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
                 Intent intent = new Intent(view.getContext(), TestActivity.class);
                 intent.putExtra("id_producto", lists.getIdProducto());
                 view.getContext().startActivity(intent);
@@ -82,6 +83,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
         holder.imageViewSubmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
                 Intent intent = new Intent(view.getContext(), TestActivity.class);
                 intent.putExtra("id_producto", lists.getIdProducto());
                 view.getContext().startActivity(intent);

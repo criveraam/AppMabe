@@ -39,6 +39,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -73,6 +77,26 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         columns(2);
         getData();
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        capa.setVisibility(View.GONE);
+                    }
+                });
+            }
+        };
+        thread.start(); //start the thread
+
+
 
     }
 
@@ -142,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void parseJson(String rqt){
-
+        Log.e(TAG, "RESPONSE::: " + rqt);
         try {
             JSONArray obj = new JSONArray(rqt);
             for (int i = 0; i < obj.length(); i++){
