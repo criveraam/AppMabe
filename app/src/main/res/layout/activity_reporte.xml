@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ti.airmovil.mabe.Activities.ReporteActivity">
+    tools:context="com.ti.airmovil.mabe.Activities.FiltroActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_reporte"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -23,7 +23,8 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:background="@color/cardview_light_background"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -31,51 +32,53 @@
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     style="@style/layout_separador"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/logo_mabe" />
+
+                    </LinearLayout>
 
                     <TableLayout
+                        android:id="@+id/trproductos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:stretchColumns="1"
-                        android:background="#FFFFFF">
-
+                        android:padding="20dp">
 
                         <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@color/colorPrimaryDark"
                             android:gravity="center">
 
                             <TextView
                                 style="@style/texto_h1"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Horas"
+                                android:text="Reporte Horas"
                                 android:textAlignment="center"
-                                android:textColor="@color/cardview_light_background"
-                                android:backgroundTint="@color/cardview_light_background"/>
-
+                                android:textColor="@color/azulFuerte"
+                                android:textStyle="bold" />
 
                         </TableRow>
-                        <TableRow android:background="@color/colorPrimary">
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="Producto" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="10:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="11:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="12:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="13:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="14:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="15:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="16:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="17:00" />
-                            <TextView style="@style/texto_h1" android:background="@color/colorPrimary"  android:textColor="@color/cardview_light_background" android:text="18:00" />
-                        </TableRow>
+
                     </TableLayout>
                 </LinearLayout>
             </HorizontalScrollView>
+
         </ScrollView>
+
     </android.support.v4.widget.NestedScrollView>
+
+
 </android.support.design.widget.CoordinatorLayout>
