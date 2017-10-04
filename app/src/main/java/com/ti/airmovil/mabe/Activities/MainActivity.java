@@ -19,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         getDatos1 = new ArrayList<>();
 
@@ -232,14 +234,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_option, menu);
-        //menu.getItem(1).setVisible(false);
+        menu.getItem(0).setVisible(false);
+        menu.getItem(1).setVisible(false);
+        menu.getItem(2).setVisible(false);
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {}
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        menu.getItem(0).setVisible(true);
+                        menu.getItem(1).setVisible(true);
+                        menu.getItem(2).setVisible(true);
+                    }
+                });
+            }
+        };
+        thread.start(); //start the thread
         return true;
     }
 
-    public boolean checkListOrColumns = false;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -247,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
                 return true;
             case R.id.menu_columnas:
-                checkListOrColumns = true;
                 columns(2);
                 return true;
             case R.id.menu_lista:

@@ -1,6 +1,7 @@
 package com.ti.airmovil.mabe.Activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +35,9 @@ public class FiltroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         setContentView(R.layout.activity_filtro);
         sCorreo = (Spinner) findViewById(R.id.sCorreo);
         sGravedad = (Spinner) findViewById(R.id.sGravedad);
@@ -112,7 +116,7 @@ public class FiltroActivity extends AppCompatActivity {
         btnOmitirFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent().setClass(FiltroActivity.this, Reporte_2.class));
+                startActivity(new Intent().setClass(FiltroActivity.this, ReporteProductosActivity.class));
             }
         });
 
