@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -144,28 +144,25 @@
     </style>
 
     <style name="celda_table">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:textSize">12dp</item>
-        <item name="android:gravity">bottom</item>
-        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:background">@drawable/encabezado</item>
-        <item name="android:backgroundTint">#ffffff</item>
+        <item name="android:backgroundTint" tools:targetApi="lollipop">#ffffff</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/azulFuerte</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>
 
     <style name="celda_table_2">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:textSize">12dp</item>
-        <item name="android:gravity">bottom</item>
-        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:background">@drawable/celda_estilo1</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:backgroundTint">@color/azulFuerte</item>
-
+        <item name="android:backgroundTint" tools:targetApi="lollipop">@color/azulFuerte</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>

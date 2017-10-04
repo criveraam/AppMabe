@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,24 +39,19 @@ public class ReporteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reporte);
         trproductos = (TableLayout) findViewById(R.id.trproductos);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
         getData();
     }
-
 
     private void getData(){
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -63,7 +59,7 @@ public class ReporteActivity extends AppCompatActivity {
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response) {
-                        parseResponse(response);
+                        generarTabla(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -81,7 +77,7 @@ public class ReporteActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void parseResponse(String response){
+    private void generarTabla(String response){
         try{
             JSONArray objArray = new JSONArray(response);
             JSONObject json_producto = objArray.getJSONObject(0);
@@ -90,31 +86,23 @@ public class ReporteActivity extends AppCompatActivity {
             TableRow trEncabezado = new TableRow(this);
 
 /*********************/
+            /* COLUMNA DE ENCABEZADO NOMBRE PRODUCTO */
             TextView encabezado = new TextView(wrappedContext, null, 0);
             encabezado.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
             encabezado.setText("Producto");
             trEncabezado.addView(encabezado);
-
+            /* COLUMNA DE COMPETENCIA */
             TextView competencia = new TextView(wrappedContext, null, 0);
             competencia.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
             competencia.setText("Competencia");
             trEncabezado.addView(competencia);
-
-            for(int j=0; j<5; j++){
+            for(int j=12; j<18; j++){
                 encabezado = new TextView(wrappedContext, null, 0);
                 encabezado.setText(horas.get(j).toString()+":00");
                 trEncabezado.addView(encabezado);
             }
-
-            trproductos.addView(
-                    trEncabezado,
-                    new TableLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-            );
+            trproductos.addView(trEncabezado, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 /*********************/
-
             for(int j=0; j<objArray.length(); j++){
                 json_producto = objArray.getJSONObject(j);
                 JSONArray precio_mabe = json_producto.getJSONArray(String.valueOf(6));
@@ -122,7 +110,6 @@ public class ReporteActivity extends AppCompatActivity {
                 JSONArray precio_best_buy = json_producto.getJSONArray(String.valueOf(8));
                 TableRow tr1 = new TableRow(this);
                 tr1.setLayoutParams(new ViewGroup.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-
                 if(j%2==0){
                     wrappedContext = new ContextThemeWrapper(this, R.style.celda_table);
                     tr1.setBackgroundResource(R.color.cardview_light_background);
@@ -130,22 +117,20 @@ public class ReporteActivity extends AppCompatActivity {
                     wrappedContext = new ContextThemeWrapper(this, R.style.celda_table_2);
                     tr1.setBackgroundResource(R.color.azulFuerte);
                 }
-
+                /* CELDA DEL NOMBRE DEL PRODUCTO */
                 TextView nombre_producto = new TextView(wrappedContext, null, 0);
                 nombre_producto.setText(json_producto.getString(String.valueOf(4)));
                 nombre_producto.setMaxWidth(300);
                 tr1.addView(nombre_producto);
-
+                /* CELDA DEL NOMBRE DE LA COMPETENCIA */
                 TextView nombre_competencia = new TextView(wrappedContext, null, 0);
                 nombre_competencia.setText("Wallmart\nBest Buy");
                 nombre_competencia.setMaxWidth(100);
                 nombre_competencia.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
                 tr1.addView(nombre_competencia);
-
-                for(int k=0; k<5; k++){
+                for(int k=12; k<18; k++){
                     TextView precio = new TextView(wrappedContext, null, 0);
                     String texto = "";
-
                     double m = precio_mabe.getDouble(k);
                     double w = precio_wallmart.getDouble(k);
                     double b = precio_best_buy.getDouble(k);
@@ -153,7 +138,6 @@ public class ReporteActivity extends AppCompatActivity {
                     double porcentaje_b = b/100;
                     DecimalFormat formato_decimal = new DecimalFormat(".00");
                     String porcentaje = "";
-
                     if(m<w){
                         double mw = w - m;
                         double porcentaje_mw = mw/porcentaje_w;
@@ -167,9 +151,7 @@ public class ReporteActivity extends AppCompatActivity {
                         porcentaje = (porcentaje.charAt(0)=='.')? "0"+porcentaje : porcentaje;
                         texto = porcentaje+"% ⇧";
                     }
-
                     texto += (texto!="")? "\n":"";
-
                     if(m<b){
                         double mb = b - m;
                         double porcentaje_mb = mb/porcentaje_b;
@@ -183,16 +165,13 @@ public class ReporteActivity extends AppCompatActivity {
                         porcentaje = (porcentaje.charAt(0)=='.')? "0"+porcentaje : porcentaje;
                         texto += porcentaje+"% ⇧";
                     }
-
-                    precio.setText(texto);
+                    precio.setText(texto+" ");
                     tr1.addView(precio);
                 }
-
-                trproductos.addView(tr1, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                trproductos.addView(tr1, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
-
-
         }catch(Exception e){
+            Toast.makeText(this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("JMA", "errores----->"+e.getMessage());
         }
     }

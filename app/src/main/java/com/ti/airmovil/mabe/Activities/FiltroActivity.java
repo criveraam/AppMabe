@@ -112,7 +112,7 @@ public class FiltroActivity extends AppCompatActivity {
         btnOmitirFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent().setClass(FiltroActivity.this, ReporteActivity.class));
+                startActivity(new Intent().setClass(FiltroActivity.this, Reporte_2.class));
             }
         });
 
