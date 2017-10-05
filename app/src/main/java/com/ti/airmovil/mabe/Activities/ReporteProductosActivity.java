@@ -122,7 +122,6 @@ public class ReporteProductosActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         getDatos1 = new ArrayList<>();
         initService();
-        getData();
         initCollapsingToolbar();
     }
 

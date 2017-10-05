@@ -37,7 +37,7 @@
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
-                    android:src="@drawable/mabe_logo_1"/>
+                    android:src="@drawable/mabe_logo_2"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

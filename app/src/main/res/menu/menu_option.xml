@@ -7,8 +7,13 @@
         app:showAsAction="always"
         android:title="reportes"/>
     <item
-        android:id="@+id/menu_filtro"
+        android:id="@+id/menu_filtro1"
         android:icon="@drawable/ic_settings"
+        app:showAsAction="always"
+        android:title="User"/>
+    <item
+        android:id="@+id/menu_filtro2"
+        android:icon="@drawable/ic_arrow_drop_down"
         app:showAsAction="always"
         android:title="User"/>
     <item

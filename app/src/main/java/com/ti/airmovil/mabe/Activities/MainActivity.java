@@ -162,29 +162,42 @@ public class MainActivity extends AppCompatActivity {
         Button btn1 = (Button) findViewById(R.id.btn1filtro);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                try{
-                    Thread.sleep(5000);
-                }catch(Exception e){
-                    Log.e(TAG, e.getMessage());
-                }
+            public void onClick(final View view) {
                 Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
-                NotificationCompat.Builder mBuilder;
-                NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                int icono = R.drawable.mabe_png;
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0,intent, 0);
-                mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(icono)
-                        .setContentTitle("Notificación Mabe")
-                        .setContentText("Filtro recibido desde la aplicacion de monitoreo")
-                        .setVibrate(new long[]{500,500,500,500,500,500,500,500,500})
-                        .setSound(soundUri)
-                        .setAutoCancel(true);
-                mNotifyMgr.notify(1, mBuilder.build());
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1700);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                NotificationCompat.Builder mBuilder;
+                                NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                                int icono = R.drawable.mabe_png;
+                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0,intent, 0);
+                                mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                                Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
+                                        .setContentIntent(pendingIntent)
+                                        .setSmallIcon(icono)
+                                        .setContentTitle("Notificación Mabe")
+                                        .setContentText("Filtro recibido desde la aplicacion de monitoreo")
+                                        //.setVibrate(new long[]{500,500,500,500,500,500,500,500,500})
+                                        .setSound(soundUri)
+                                        .setAutoCancel(true);
+                                mNotifyMgr.notify(1, mBuilder.build());
+                            }
+                        });
+                    }
+                };
+                thread.start();
             }
         });
 
@@ -451,6 +464,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_option, menu);
+        menu.getItem(2).setVisible(true);
         /*menu.getItem(0).setVisible(false);
         menu.getItem(1).setVisible(false);
         menu.getItem(2).setVisible(false);
@@ -477,15 +491,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        findViewById(R.id.menu_filtro1).setVisibility(View.VISIBLE);
+        findViewById(R.id.menu_filtro2).setVisibility(View.GONE);
         switch (item.getItemId()){
             case R.id.menu_reportes:
                 startActivity(new Intent().setClass(MainActivity.this, ReporteProductosActivity.class));
                 return true;
-            case R.id.menu_filtro:
-                //startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
+            case R.id.menu_filtro1:
                 bottomSheetLayout.setVisibility(View.VISIBLE);
                 Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_up);
                 bottomSheetLayout.startAnimation(slide_up);
+                findViewById(R.id.menu_filtro1).setVisibility(View.GONE);
+                findViewById(R.id.menu_filtro2).setVisibility(View.VISIBLE);
+                return true;
+            case R.id.menu_filtro2:
+                bottomSheetLayout.setVisibility(View.GONE);
+                Animation slide_up1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_down);
+                bottomSheetLayout.startAnimation(slide_up1);
+                findViewById(R.id.menu_filtro1).setVisibility(View.VISIBLE);
+                findViewById(R.id.menu_filtro2).setVisibility(View.GONE);
                 return true;
             case R.id.menu_columnas:
                 findViewById(R.id.menu_columnas).setVisibility(View.GONE);
