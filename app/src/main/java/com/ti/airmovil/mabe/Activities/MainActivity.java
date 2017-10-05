@@ -3,9 +3,14 @@ package com.ti.airmovil.mabe.Activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.media.Image;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,10 +26,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +43,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ti.airmovil.mabe.Adapters.ProductosAdapter;
+import com.ti.airmovil.mabe.Dialog.CustomBottomSheetDialogFragment;
 import com.ti.airmovil.mabe.Helper.Config;
 import com.ti.airmovil.mabe.Models.ProductosModel;
 import com.ti.airmovil.mabe.R;
@@ -56,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private LinearLayout capa1;
     private RelativeLayout capa2;
+    private LinearLayout bottomSheetLayout;
+    private List<String> porcentajes, correos, gravedad;
+    private CoordinatorLayout layoutFiltro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +87,16 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         capa1 = (LinearLayout) findViewById(R.id.linear_layout_capa1);
         capa2 = (RelativeLayout) findViewById(R.id.linear_layout_capa2);
+        bottomSheetLayout = (LinearLayout) findViewById(R.id.bottomSheetLayout);
         layoutManager = new LinearLayoutManager(this);
-
-
 
         setSupportActionBar(toolbar);
         initCollapsingToolbar();
         columns(2);
         initService();
+        porcentajes();
+        spinnerMail();
+        btns();
 
         Button btnRefresh = (Button) findViewById(R.id.button_refrescar);
         btnRefresh.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +106,114 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: DISMISS
+        ImageView imageViewDismiss = (ImageView) findViewById(R.id.imageView_dismiss);
+        imageViewDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetLayout.setVisibility(View.GONE);
+                Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_down);
+                bottomSheetLayout.startAnimation(slide_up);
+            }
+        });
 
+    }
+
+    private void porcentajes(){
+        final SeekBar sk = (SeekBar) findViewById(R.id.sSeekBarPorcentaje1);
+        sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                TextView textViewPorcentaje1 = (TextView) findViewById(R.id.textview_porcentaje_1);
+                textViewPorcentaje1.setText(String.valueOf(progress)+"%");
+                //Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+            }
+        });
+
+        final SeekBar sk1 = (SeekBar) findViewById(R.id.sSeekBarPorcentaje2);
+        sk1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                TextView textViewPorcentaje2 = (TextView) findViewById(R.id.textview_porcentaje_2);
+                textViewPorcentaje2.setText(String.valueOf(progress)+"%");
+                //Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void btns(){
+        Button btn1 = (Button) findViewById(R.id.btn1filtro);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btn2 = (Button) findViewById(R.id.btn2filtro);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Se enviara sin filtro, espere un momento.", Snackbar.LENGTH_SHORT).show();
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1700);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent().setClass(MainActivity.this, ReporteProductosActivity.class));
+                            }
+                        });
+                    }
+                };
+                thread.start();
+            }
+        });
+    }
+
+    private void spinnerMail(){
+        correos = new ArrayList<String>();
+        correos.add("Selecciona un email");
+        correos.add("juan@mabe.com");
+        correos.add("jorge@mabe.com");
+        correos.add("cesar@mabe.com");
+        correos.add("esau@mabe.com");
+
+        gravedad = new ArrayList<String>();
+        gravedad.add("Selecciona un nivel");
+        gravedad.add("Moderado");
+        gravedad.add("Alto");
+        gravedad.add("Grave");
+
+        Spinner sCorreo = (Spinner) findViewById(R.id.sCorreo);
+
+        ArrayAdapter<String> adaptadorCorreo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, correos);
+        adaptadorCorreo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sCorreo.setAdapter(adaptadorCorreo);
+
+        Spinner spinner_gravedad = (Spinner) findViewById(R.id.spinner_gravedad);
+
+        ArrayAdapter<String> adaptadorGravedad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gravedad);
+        adaptadorGravedad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_gravedad.setAdapter(adaptadorGravedad);
     }
 
     private void initService(){
@@ -333,7 +456,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent().setClass(MainActivity.this, ReporteProductosActivity.class));
                 return true;
             case R.id.menu_filtro:
-                startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
+                //startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
+
+                bottomSheetLayout.setVisibility(View.VISIBLE);
+                Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_up);
+                bottomSheetLayout.startAnimation(slide_up);
                 return true;
             case R.id.menu_columnas:
                 columns(2);

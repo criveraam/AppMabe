@@ -17,6 +17,7 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -176,6 +177,7 @@ public class TestActivity extends AppCompatActivity {
 
             //Config.imagenDetalle = imagen;
             Log.e(TAG, "IMAGEN A MOSTRAT EN COLLAPSING::: " + imagen);
+            imageViewProducto.setAnimation(AnimationUtils.loadAnimation(TestActivity.this, R.anim.zoom_in));
             new DownloadImageTask((ImageView) imageViewProducto).execute(imagen);
         } catch (JSONException e) {
             Log.e(TAG, "errores");

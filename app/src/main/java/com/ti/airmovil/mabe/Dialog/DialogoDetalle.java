@@ -42,8 +42,6 @@ public class DialogoDetalle extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        imageViewDismiss = (ImageView) view.findViewById(R.id.imageView_dismiss);
-        imageViewProductoDetalle = (ImageView) view.findViewById(R.id.imageView_producto_detalle);
         new DownloadImageTask((ImageView) imageViewProductoDetalle).execute(Config.imagenDetalle);
 
         imageViewDismiss.setOnClickListener(new View.OnClickListener() {
