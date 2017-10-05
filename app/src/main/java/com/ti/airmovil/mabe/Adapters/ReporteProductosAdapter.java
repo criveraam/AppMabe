@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.ti.airmovil.mabe.Dialog.CustomBottomSheetDialogFragment;
@@ -48,6 +50,11 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
     @Override
     public MyViewHolderA onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_reportes, parent, false);
+        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.anim_up);
+        animation.setDuration(500);
+        view.setAnimation(animation);
+        view.animate();
+        animation.start();
         return new MyViewHolderA(view);
     }
 
@@ -56,6 +63,13 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
         final ReporteProductosModel lists = lista.get(position);
         holder.textView_numerador_reporte_productos.setText(String.valueOf(position + 1));
         holder.textView_nombre_producto.setText(lists.getNombreProducto());
+        holder.textView_precio_mabe.setText(lists.getPrecioMabe());
+        holder.textView_walmart_precio.setText(lists.getPrecioWalmart());
+        holder.textView_bestbay_precio.setText(lists.getPrecioBestBuy());
+        holder.textView_walmart_porcentaje.setText(lists.getPorcentajeWalmart());
+        holder.textView_bestbuy_porcentaje.setText(lists.getPorcentajeBestBuy());
+        holder.textView_walmart_porcentaje.setTextColor(lists.getColorWalmart());
+        holder.textView_bestbuy_porcentaje.setTextColor(lists.getColorBestBuy());
         holder.cardView_contenedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

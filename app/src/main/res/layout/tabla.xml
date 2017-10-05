@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView style="@style/layout_separador">
+
+        <HorizontalScrollView style="@style/layout_separador">
+
+            <LinearLayout
+                style="@style/layout_separador"
+                android:orientation="vertical">
+                <TableLayout
+                    android:id="@+id/tlproductos_reporte"
+                    style="@style/layout"
+                    android:layout_gravity="center"
+                    android:padding="20dp">
+
+                    <TableRow
+                        android:id="@+id/table_row_encabezado"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/encabezado">
+                        <TableLayout>
+                            <TableRow android:id="@+id/tr_productos" android:layout_width="wrap_content" android:layout_height="match_parent">
+                                <TextView style="@style/encabezado_producto" />
+                            </TableRow>
+                            <TableRow android:id="@+id/tr_precios_mabe" android:layout_width="wrap_content" android:layout_height="match_parent">
+                                <LinearLayout style="@style/contenedor_encabezado_iconos">
+                                    <ImageView style="@style/encabezado_iconos" android:src="@drawable/mabe_png"/>
+                                </LinearLayout>
+                            </TableRow>
+                            <TableRow android:id="@+id/tr_precios_walmart" android:layout_width="wrap_content" android:layout_height="match_parent">
+                                <LinearLayout style="@style/contenedor_encabezado_iconos">
+                                    <ImageView style="@style/encabezado_iconos" android:src="@drawable/walmart_png"/>
+                                </LinearLayout>
+                            </TableRow>
+                            <TableRow android:id="@+id/tr_precios_best_buy" android:layout_width="wrap_content" android:layout_height="match_parent">
+                                <LinearLayout style="@style/contenedor_encabezado_iconos">
+                                    <ImageView style="@style/encabezado_iconos" android:src="@drawable/best_buy_png" />
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+</LinearLayout>

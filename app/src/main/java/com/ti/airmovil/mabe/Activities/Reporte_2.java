@@ -1,5 +1,6 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -26,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ti.airmovil.mabe.R;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,9 +38,8 @@ import java.util.Map;
 
 public class Reporte_2 extends AppCompatActivity {
 
-    private TableLayout trproductos;
-    private LinearLayout linear_reporte_hora;
-    private ProgressBar progressBar;
+    private TableLayout tl_productos;
+    private TableRow tr_productos, tr_precios_mabe, tr_precios_walmart, tr_precios_best_buy;
     private Button btn_aplicar_hora;
     private int indice_hora;
 
@@ -46,7 +47,7 @@ public class Reporte_2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_2);
-        trproductos = (TableLayout) findViewById(R.id.trproductos_reporte);
+        tl_productos = (TableLayout) findViewById(R.id.tlproductos_reporte);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reporte_2);
         btn_aplicar_hora = (Button) findViewById(R.id.btn_aplicar_hora);
         Spinner spinner = (Spinner) findViewById(R.id.sHora_reporte);
@@ -70,9 +71,10 @@ public class Reporte_2 extends AppCompatActivity {
         btn_aplicar_hora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TableRow encabezado = (TableRow) findViewById(R.id.table_row_encabezado);
-                trproductos.removeAllViews();
-                trproductos.addView(encabezado);
+                tr_productos.removeAllViews();
+                tr_precios_mabe.removeAllViews();
+                tr_precios_walmart.removeAllViews();
+                tr_precios_best_buy.removeAllViews();
                 getData();
             }
         });
@@ -114,39 +116,75 @@ public class Reporte_2 extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    @SuppressLint("WrongViewCast")
     private void generarTabla(String response){
         try{
             JSONArray objArray = new JSONArray(response);
-            ContextThemeWrapper wrappedContext = null;
+            ContextThemeWrapper wrappedContext = new ContextThemeWrapper(this, R.style.celda_table);
+
+            tr_productos = (TableRow) findViewById(R.id.tr_productos);
+            tr_precios_mabe = (TableRow) findViewById(R.id.tr_precios_mabe);
+            tr_precios_walmart = (TableRow) findViewById(R.id.tr_precios_walmart);
+            tr_precios_best_buy = (TableRow) findViewById(R.id.tr_precios_best_buy);
+
+            LinearLayout ll_mabe = new LinearLayout(this,null, R.style.contenedor_encabezado_iconos);
+            //ll_mabe.setOrientation(LinearLayout.VERTICAL);
+            ll_mabe.getLayoutParams().width = 100;
+            //ll_mabe.getLayoutParams().height = 50;
+
+
+            LinearLayout ll_walmart = new LinearLayout(this,null, R.style.contenedor_encabezado_iconos);
+            LinearLayout ll_best_buy = new LinearLayout(this,null, R.style.contenedor_encabezado_iconos);
+
+            TextView encabezado_nombre = new TextView(new ContextThemeWrapper(this, R.style.encabezado_producto),null,0);
+
+            ImageView encabezado_mabe = new ImageView(this);
+            encabezado_mabe.setImageResource(R.drawable.mabe_png);
+
+            encabezado_mabe.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+
+            TextView encabezado_walmart = new TextView(new ContextThemeWrapper(this, R.style.encabezado_producto),null,0);
+            TextView encabezado_best_buy = new TextView(new ContextThemeWrapper(this, R.style.encabezado_producto),null,0);
+
+            ll_mabe.addView(encabezado_mabe);
+            ll_walmart.addView(encabezado_walmart);
+            ll_best_buy.addView(encabezado_best_buy);
+
+            tr_productos.addView(encabezado_nombre);
+            tr_precios_mabe.addView(ll_mabe);
+            tr_precios_walmart.addView(ll_walmart);
+            tr_precios_best_buy.addView(ll_best_buy);
+
+
             for(int j=0; j<objArray.length(); j++){
                 JSONObject json_producto = objArray.getJSONObject(j);
-                JSONArray precio_mabe = json_producto.getJSONArray(String.valueOf(6));
-                JSONArray precio_wallmart = json_producto.getJSONArray(String.valueOf(7));
-                JSONArray precio_best_buy = json_producto.getJSONArray(String.valueOf(8));
+                JSONArray precios_mabe = json_producto.getJSONArray(String.valueOf(6));
+                JSONArray precios_wallmart = json_producto.getJSONArray(String.valueOf(7));
+                JSONArray precios_best_buy = json_producto.getJSONArray(String.valueOf(8));
 
-                TableRow tr1 = new TableRow(this);
-                tr1.setLayoutParams(new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
-                if(j%2==0){
-                    wrappedContext = new ContextThemeWrapper(this, R.style.celda_table);
-                    tr1.setBackgroundResource(R.color.cardview_light_background);
-                }else{
-                    wrappedContext = new ContextThemeWrapper(this, R.style.celda_table_2);
-                    tr1.setBackgroundResource(R.color.azulFuerte);
-                }
+
 
                 TextView nombre_producto = new TextView(wrappedContext, null, 0);
                 nombre_producto.setText(json_producto.getString(String.valueOf(4)));
                 nombre_producto.setMaxWidth(300);
                 nombre_producto.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
-                tr1.addView(nombre_producto);
+                tr_productos.addView(nombre_producto);
 
-                TextView tv_precio_mabe = new TextView(wrappedContext, null, 0);
-                TextView tv_precio_wallmart = new TextView(wrappedContext, null, 0);
-                TextView tv_precio_best_buy = new TextView(wrappedContext, null, 0);
+                TextView precio_mabe = new TextView(wrappedContext, null, 0);
+                precio_mabe.setText(precios_mabe.getString(indice_hora));
+                precio_mabe.setMaxWidth(300);
 
-                double m = precio_mabe.getDouble(indice_hora);
-                double w = precio_wallmart.getDouble(indice_hora);
-                double b = precio_best_buy.getDouble(indice_hora);
+                TextView precio_walmart = new TextView(wrappedContext, null, 0);
+                precio_walmart.setText(precios_wallmart.getString(indice_hora));
+                precio_walmart.setMaxWidth(300);
+
+                TextView precio_best_buy = new TextView(wrappedContext, null, 0);
+                precio_best_buy.setText(precios_best_buy.getString(indice_hora));
+                precio_best_buy.setMaxWidth(300);
+
+                double m = precios_mabe.getDouble(indice_hora);
+                double w = precios_wallmart.getDouble(indice_hora);
+                double b = precios_best_buy.getDouble(indice_hora);
                 double porcentaje_w = w/100;
                 double porcentaje_b = b/100;
 
@@ -159,14 +197,14 @@ public class Reporte_2 extends AppCompatActivity {
                     porcentaje_wallmart = formato_decimal.format(porcentaje_mw);
                     porcentaje_wallmart = (porcentaje_wallmart.charAt(0)=='.')? "0"+porcentaje_wallmart : porcentaje_wallmart;
                     porcentaje_wallmart += "% ⇧";
-                    tv_precio_wallmart.setTextColor(Color.GREEN);
+                    precio_walmart.setTextColor(Color.GREEN);
                 }else{
                     double mw = m - w;
                     double porcentaje_mw = mw/porcentaje_w;
                     porcentaje_wallmart = formato_decimal.format(porcentaje_mw);
                     porcentaje_wallmart = (porcentaje_wallmart.charAt(0)=='.')? "0"+porcentaje_wallmart : porcentaje_wallmart;
                     porcentaje_wallmart += "% ⇩";
-                    tv_precio_wallmart.setTextColor(Color.RED);
+                    precio_walmart.setTextColor(Color.RED);
                 }
 
                 if(m<b){
@@ -175,25 +213,24 @@ public class Reporte_2 extends AppCompatActivity {
                     porcentaje_best_buy = formato_decimal.format(porcentaje_mb);
                     porcentaje_best_buy = (porcentaje_best_buy.charAt(0)=='.')? "0"+porcentaje_best_buy : porcentaje_best_buy;
                     porcentaje_best_buy += "% ⇧";
-                    tv_precio_best_buy.setTextColor(Color.GREEN);
+                    precio_best_buy.setTextColor(Color.GREEN);
                 }else{
                     double mb = m - b;
                     double porcentaje_mb = mb/porcentaje_b;
                     porcentaje_best_buy = formato_decimal.format(porcentaje_mb);
                     porcentaje_best_buy = (porcentaje_best_buy.charAt(0)=='.')? "0"+porcentaje_best_buy : porcentaje_best_buy;
                     porcentaje_best_buy += "% ⇩";
-                    tv_precio_best_buy.setTextColor(Color.RED);
+                    precio_best_buy.setTextColor(Color.RED);
                 }
 
-                tv_precio_mabe.setText("$"+m);
-                tv_precio_wallmart.setText("$"+w+"\n"+porcentaje_wallmart);
-                tv_precio_best_buy.setText("$"+b+"\n"+porcentaje_best_buy);
+                precio_mabe.setText("$"+m);
+                precio_walmart.setText("$"+w+"\n"+porcentaje_wallmart);
+                precio_best_buy.setText("$"+b+"\n"+porcentaje_best_buy);
 
-                tr1.addView(tv_precio_mabe);
-                tr1.addView(tv_precio_wallmart);
-                tr1.addView(tv_precio_best_buy);
+                tr_precios_mabe.addView(precio_mabe);
+                tr_precios_walmart.addView(precio_walmart);
+                tr_precios_best_buy.addView(precio_best_buy);
 
-                trproductos.addView(tr1, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             }
         }catch(Exception e){
             Toast.makeText(this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();

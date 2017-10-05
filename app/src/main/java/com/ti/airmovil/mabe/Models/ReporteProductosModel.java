@@ -5,40 +5,36 @@ package com.ti.airmovil.mabe.Models;
  */
 
 public class ReporteProductosModel {
-    public String nombreProducto;
-    public String precioMabe;
-    public String precioWalmart;
-    public String precioBestBuy;
+    private String nombreProducto;
+    private String precioMabe;
+    private String precioWalmart;
+    private String precioBestBuy;
+    private String porcentajeWalmart;
+    private String porcentajeBestBuy;
+    private int colorWalmart;
+    private int colorBestBuy;
 
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
+    public String getNombreProducto() {return nombreProducto;}
+    public void setNombreProducto(String nombreProducto) {this.nombreProducto = nombreProducto;}
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
+    public String getPrecioMabe() {return precioMabe;}
+    public void setPrecioMabe(String precioMabe) {this.precioMabe = precioMabe;}
 
-    public String getPrecioMabe() {
-        return precioMabe;
-    }
+    public String getPrecioWalmart() {return precioWalmart;}
+    public void setPrecioWalmart(String precioWalmart) {this.precioWalmart = precioWalmart;}
 
-    public void setPrecioMabe(String precioMabe) {
-        this.precioMabe = precioMabe;
-    }
+    public String getPrecioBestBuy() {return precioBestBuy;}
+    public void setPrecioBestBuy(String precioBestBuy) {this.precioBestBuy = precioBestBuy;}
 
-    public String getPrecioWalmart() {
-        return precioWalmart;
-    }
+    public String getPorcentajeWalmart() {return porcentajeWalmart;}
+    public void setPorcentajeWalmart(String porcentajeWalmart) {this.porcentajeWalmart = porcentajeWalmart;}
 
-    public void setPrecioWalmart(String precioWalmart) {
-        this.precioWalmart = precioWalmart;
-    }
+    public String getPorcentajeBestBuy() {return porcentajeBestBuy;}
+    public void setPorcentajeBestBuy(String porcentajeBresBuy) {this.porcentajeBestBuy = porcentajeBresBuy;}
 
-    public String getPrecioBestBuy() {
-        return precioBestBuy;
-    }
+    public int getColorWalmart() {return colorWalmart;}
+    public void setColorWalmart(int colorWalmart) {this.colorWalmart = colorWalmart;}
 
-    public void setPrecioBestBuy(String precioBestBuy) {
-        this.precioBestBuy = precioBestBuy;
-    }
+    public int getColorBestBuy() {return colorBestBuy;}
+    public void setColorBestBuy(int colorBestBuy) {this.colorBestBuy = colorBestBuy;}
 }
