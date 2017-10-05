@@ -1,8 +1,11 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.media.Image;
@@ -13,6 +16,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -158,7 +162,26 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
+                try{
+                    Thread.sleep(5000);
+                }catch(Exception e){
+                    Log.e(TAG, e.getMessage());
+                }
+                //Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
+                NotificationCompat.Builder mBuilder;
+                NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                int icono = R.drawable.mabe_png;
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0,intent, 0);
+                mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingIntent)
+                        .setSmallIcon(icono)
+                        .setContentTitle("Notificación Mabe")
+                        .setContentText("Filtro recibido desde la aplicacion de monitoreo")
+                        .setVibrate(new long[]{500,500,500,500,500,500,500,500,500})
+                        .setAutoCancel(true);
+                mNotifyMgr.notify(1, mBuilder.build());
             }
         });
 
