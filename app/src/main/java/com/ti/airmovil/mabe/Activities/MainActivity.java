@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.media.Image;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -167,19 +169,21 @@ public class MainActivity extends AppCompatActivity {
                 }catch(Exception e){
                     Log.e(TAG, e.getMessage());
                 }
-                //Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
                 NotificationCompat.Builder mBuilder;
                 NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                 int icono = R.drawable.mabe_png;
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0,intent, 0);
                 mBuilder = new NotificationCompat.Builder(getApplicationContext());
+                Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
                         .setContentIntent(pendingIntent)
                         .setSmallIcon(icono)
                         .setContentTitle("Notificación Mabe")
                         .setContentText("Filtro recibido desde la aplicacion de monitoreo")
                         .setVibrate(new long[]{500,500,500,500,500,500,500,500,500})
+                        .setSound(soundUri)
                         .setAutoCancel(true);
                 mNotifyMgr.notify(1, mBuilder.build());
             }

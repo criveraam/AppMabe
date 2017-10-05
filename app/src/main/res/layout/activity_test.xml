@@ -196,7 +196,7 @@
                             android:id="@+id/imageView_icon1"
                             android:layout_width="70dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/icon_mabe"/>
+                            android:src="@drawable/mabe_png"/>
                         <TextView
                             android:id="@+id/textView_tienda1"
                             android:layout_width="match_parent"
@@ -235,7 +235,7 @@
                             android:id="@+id/imageView_icon2"
                             android:layout_width="70dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/icon_walmart"/>
+                            android:src="@drawable/walmart_png"/>
                         <TextView
                             android:id="@+id/textView_tienda2"
                             android:layout_width="match_parent"
@@ -273,8 +273,8 @@
                         <ImageView
                             android:id="@+id/imageView_icon3"
                             android:layout_width="70dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/icon_bestbuy"/>
+                            android:layout_height="25dp"
+                            android:src="@drawable/best_buy_png"/>
                         <TextView
                             android:id="@+id/textView_tienda3"
                             android:layout_width="match_parent"
