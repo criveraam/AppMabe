@@ -2,8 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_reportes"
+        android:icon="@drawable/ic_equalizer"
+        app:showAsAction="always"
+        android:title="reportes"/>
+    <item
         android:id="@+id/menu_filtro"
-        android:icon="@drawable/ic_account_circle"
+        android:icon="@drawable/ic_settings"
         app:showAsAction="always"
         android:title="User"/>
     <item

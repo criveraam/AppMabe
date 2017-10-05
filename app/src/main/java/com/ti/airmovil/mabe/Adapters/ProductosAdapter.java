@@ -15,10 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ti.airmovil.mabe.Activities.DetalleActivity;
+import com.ti.airmovil.mabe.Activities.MainActivity;
 import com.ti.airmovil.mabe.Helper.Config;
 import com.ti.airmovil.mabe.Models.ProductosModel;
 
@@ -57,13 +60,22 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_productos, parent, false);
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.anim_up);
+        animation.setDuration(1000);
+        view.setAnimation(animation);
+        view.animate();
+        animation.start();
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final ProductosModel lists = lista.get(position);
-        //final String cadena = lista.get(position).getNombre().substring(0,20);
+        holder.imageViewProducto.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.zoom_in));
+        holder.textViewNumerador.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
+        holder.textViewPrecio.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
+        holder.textViewNombre.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
+        holder.imageViewSubmenu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_up));
         holder.textViewNombre.setText(lists.getNombre());
         holder.textViewPrecio.setText(Config.nf.format(Double.parseDouble(lists.getPrecio())));
         holder.textViewNumerador.setText(String.valueOf(position + 1));

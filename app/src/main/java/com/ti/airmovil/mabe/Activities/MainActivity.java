@@ -20,9 +20,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,10 +43,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -56,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private ProgressBar progressBar;
     private Toolbar toolbar;
-    private LinearLayout capa;
+    private LinearLayout capa1;
+    private RelativeLayout capa2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,34 +71,62 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        capa = (LinearLayout) findViewById(R.id.linear_layout_capa);
+        capa1 = (LinearLayout) findViewById(R.id.linear_layout_capa1);
+        capa2 = (RelativeLayout) findViewById(R.id.linear_layout_capa2);
+        layoutManager = new LinearLayoutManager(this);
+
+
 
         setSupportActionBar(toolbar);
         initCollapsingToolbar();
-        layoutManager = new LinearLayoutManager(this);
         columns(2);
-        getData();
+        initService();
 
-        Thread thread = new Thread() {
+        Button btnRefresh = (Button) findViewById(R.id.button_refrescar);
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                }
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        capa.setVisibility(View.GONE);
-                    }
-                });
+            public void onClick(View view) {
+                initService();
             }
-        };
-        thread.start(); //start the thread
+        });
 
 
+    }
 
+    private void initService(){
+        capa1.setVisibility(View.VISIBLE);
+        if (Config.compruebaConexion(MainActivity.this)) {
+            Log.e(TAG, "2");
+            //capa1.setVisibility(View.GONE);
+            capa2.setVisibility(View.GONE);
+            getData();
+        }else{
+            Log.e(TAG, "3");
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            capa2.setVisibility(View.VISIBLE);
+                            capa1.setVisibility(View.GONE);
+                            Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_up);
+                            animation.setDuration(1000);
+                            capa2.setAnimation(animation);
+                            capa2.animate();
+                            animation.start();
+                        }
+                    });
+                }
+            };
+            thread.start();
+        }
     }
 
     private void test(){
@@ -121,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCollapsingToolbar(){
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(" ");
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);
@@ -134,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
+                if (scrollRange == -1)
                     scrollRange = appBarLayout.getTotalScrollRange();
-                }
+
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbar.setTitle(getString(R.string.app_name));
                     isShow = true;
@@ -153,15 +179,54 @@ public class MainActivity extends AppCompatActivity {
         StringRequest postRequest = new StringRequest(Request.Method.POST, Config.URL_PRODUCTOS,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        parseJson(response);
+                    public void onResponse(final String response) {
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1500);
+                                } catch (InterruptedException e) {
+                                }
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        capa1.setVisibility(View.GONE);
+                                        parseJson(response);
+                                    }
+                                });
+                            }
+                        };
+                        thread.start(); //start the thread
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.toString());
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        capa2.setVisibility(View.VISIBLE);
+                                        capa1.setVisibility(View.GONE);
+                                        Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_up);
+                                        animation.setDuration(1000);
+                                        capa2.setAnimation(animation);
+                                        capa2.animate();
+                                        animation.start();
+                                    }
+                                });
+                            }
+                        };
+                        thread.start();
                     }
                     });
         queue.add(postRequest);
@@ -237,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_option, menu);
-        menu.getItem(0).setVisible(false);
+        /*menu.getItem(0).setVisible(false);
         menu.getItem(1).setVisible(false);
         menu.getItem(2).setVisible(false);
         Thread thread = new Thread() {
@@ -257,13 +322,16 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         };
-        thread.start(); //start the thread
+        thread.start(); //start the thread*/
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.menu_reportes:
+                startActivity(new Intent().setClass(MainActivity.this, ReporteProductosActivity.class));
+                return true;
             case R.id.menu_filtro:
                 startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
                 return true;
