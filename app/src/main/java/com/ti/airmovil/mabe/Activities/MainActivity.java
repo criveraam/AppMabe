@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 bottomSheetLayout.startAnimation(slide_up);
             }
         });
-
     }
 
     private void porcentajes(){
@@ -484,15 +483,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_filtro:
                 //startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
-
                 bottomSheetLayout.setVisibility(View.VISIBLE);
                 Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_up);
                 bottomSheetLayout.startAnimation(slide_up);
                 return true;
             case R.id.menu_columnas:
+                findViewById(R.id.menu_columnas).setVisibility(View.GONE);
+                findViewById(R.id.menu_lista).setVisibility(View.VISIBLE);
                 columns(2);
                 return true;
             case R.id.menu_lista:
+                findViewById(R.id.menu_columnas).setVisibility(View.VISIBLE);
+                findViewById(R.id.menu_lista).setVisibility(View.GONE);
                 columns(1);
                 return true;
             default:
