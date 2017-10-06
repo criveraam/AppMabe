@@ -152,10 +152,11 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void returnActivity(){
-        Intent i= new Intent(this, MainActivity.class);
+        /*Intent i= new Intent(this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
-        finish();
+        finish();*/
+        onBackPressed();
     }
 
     private void parseResponse(String response){

@@ -74,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout capa1;
     private RelativeLayout capa2;
     private LinearLayout bottomSheetLayout;
-    private List<String> porcentajes, correos, gravedad;
-    private CoordinatorLayout layoutFiltro;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
         initCollapsingToolbar();
         columns(2);
         initService();
-        porcentajes();
-        spinnerMail();
-        btns();
+
 
         Button btnRefresh = (Button) findViewById(R.id.button_refrescar);
         btnRefresh.setOnClickListener(new View.OnClickListener() {
@@ -124,136 +121,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void porcentajes(){
-        final SeekBar sk = (SeekBar) findViewById(R.id.sSeekBarPorcentaje1);
-        sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                TextView textViewPorcentaje1 = (TextView) findViewById(R.id.textview_porcentaje_1);
-                textViewPorcentaje1.setText(String.valueOf(progress)+"%");
-                //Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
-            }
-        });
-
-        final SeekBar sk1 = (SeekBar) findViewById(R.id.sSeekBarPorcentaje2);
-        sk1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                TextView textViewPorcentaje2 = (TextView) findViewById(R.id.textview_porcentaje_2);
-                textViewPorcentaje2.setText(String.valueOf(progress)+"%");
-                //Toast.makeText(getApplicationContext(), String.valueOf(progress),Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void btns(){
-        Button btn1 = (Button) findViewById(R.id.btn1filtro);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Snackbar.make(view, "Se ha enviado la información", Snackbar.LENGTH_SHORT).show();
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1700);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                NotificationCompat.Builder mBuilder;
-                                NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                                int icono = R.drawable.mabe_png;
-                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0,intent, 0);
-                                mBuilder = new NotificationCompat.Builder(getApplicationContext());
-                                Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
-                                        .setContentIntent(pendingIntent)
-                                        .setSmallIcon(icono)
-                                        .setContentTitle("Notificación Mabe")
-                                        .setContentText("Filtro recibido desde la aplicacion de monitoreo")
-                                        //.setVibrate(new long[]{500,500,500,500,500,500,500,500,500})
-                                        .setSound(soundUri)
-                                        .setAutoCancel(true);
-                                mNotifyMgr.notify(1, mBuilder.build());
-                            }
-                        });
-                    }
-                };
-                thread.start();
-            }
-        });
-
-        Button btn2 = (Button) findViewById(R.id.btn2filtro);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Se enviara sin filtro, espere un momento.", Snackbar.LENGTH_SHORT).show();
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1700);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                startActivity(new Intent().setClass(MainActivity.this, ReporteProductosActivity.class));
-                            }
-                        });
-                    }
-                };
-                thread.start();
-            }
-        });
-    }
-
-    private void spinnerMail(){
-        correos = new ArrayList<String>();
-        correos.add("Selecciona un email");
-        correos.add("juan@mabe.com");
-        correos.add("jorge@mabe.com");
-        correos.add("cesar@mabe.com");
-        correos.add("esau@mabe.com");
-
-        gravedad = new ArrayList<String>();
-        gravedad.add("Selecciona un nivel");
-        gravedad.add("Moderado");
-        gravedad.add("Alto");
-        gravedad.add("Grave");
-
-        Spinner sCorreo = (Spinner) findViewById(R.id.sCorreo);
-
-        ArrayAdapter<String> adaptadorCorreo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, correos);
-        adaptadorCorreo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sCorreo.setAdapter(adaptadorCorreo);
-
-        Spinner spinner_gravedad = (Spinner) findViewById(R.id.spinner_gravedad);
-
-        ArrayAdapter<String> adaptadorGravedad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, gravedad);
-        adaptadorGravedad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_gravedad.setAdapter(adaptadorGravedad);
-    }
 
     private void initService(){
         capa1.setVisibility(View.VISIBLE);
@@ -464,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_option, menu);
-        menu.getItem(2).setVisible(true);
+        //menu.getItem(2).setVisible(true);
         /*menu.getItem(0).setVisible(false);
         menu.getItem(1).setVisible(false);
         menu.getItem(2).setVisible(false);
@@ -491,25 +359,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        findViewById(R.id.menu_filtro1).setVisibility(View.VISIBLE);
-        findViewById(R.id.menu_filtro2).setVisibility(View.GONE);
         switch (item.getItemId()){
             case R.id.menu_reportes:
                 startActivity(new Intent().setClass(MainActivity.this, ReporteProductosActivity.class));
                 return true;
             case R.id.menu_filtro1:
-                bottomSheetLayout.setVisibility(View.VISIBLE);
-                Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_up);
-                bottomSheetLayout.startAnimation(slide_up);
-                findViewById(R.id.menu_filtro1).setVisibility(View.GONE);
-                findViewById(R.id.menu_filtro2).setVisibility(View.VISIBLE);
-                return true;
-            case R.id.menu_filtro2:
-                bottomSheetLayout.setVisibility(View.GONE);
-                Animation slide_up1 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_down);
-                bottomSheetLayout.startAnimation(slide_up1);
-                findViewById(R.id.menu_filtro1).setVisibility(View.VISIBLE);
-                findViewById(R.id.menu_filtro2).setVisibility(View.GONE);
+                startActivity(new Intent().setClass(MainActivity.this, FiltroActivity.class));
                 return true;
             case R.id.menu_columnas:
                 findViewById(R.id.menu_columnas).setVisibility(View.GONE);

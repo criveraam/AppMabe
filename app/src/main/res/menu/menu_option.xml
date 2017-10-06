@@ -3,17 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_reportes"
-        android:icon="@drawable/ic_equalizer"
+        android:icon="@drawable/ic_stats_bars"
         app:showAsAction="always"
         android:title="reportes"/>
     <item
         android:id="@+id/menu_filtro1"
-        android:icon="@drawable/ic_settings"
-        app:showAsAction="always"
-        android:title="User"/>
-    <item
-        android:id="@+id/menu_filtro2"
-        android:icon="@drawable/ic_arrow_drop_down"
+        android:icon="@drawable/ic_filter"
         app:showAsAction="always"
         android:title="User"/>
     <item

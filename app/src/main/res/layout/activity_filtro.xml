@@ -1,134 +1,220 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheetLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ti.airmovil.mabe.Activities.FiltroActivity"
-    android:id="@+id/layoutrFiltro">
+    android:orientation="vertical"
+    app:behavior_hideable="false">
 
-    <android.support.design.widget.AppBarLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <ScrollView
-            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rango de Mabe por encima de la competencia"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical">
-
-                <ImageView
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/style_line3"
+                android:layout_margin="10dp"
+                android:padding="10dp">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/logo" />
-
-                <LinearLayout
-                    style="@style/layout_separador"
-                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <TextView
-                        style="@style/texto_h2"
-                        android:layout_weight="4"
-                        android:text="Porcentaje: " />
-                    <TextView
-                        android:id="@+id/tvPorcentaje"
-                        style="@style/texto_h2"
-                        android:layout_weight="4"
-                        android:text="10%" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/layout_separador"
-                    android:orientation="horizontal">
-
-                    <SeekBar
-                        android:id="@+id/sSeekBarPorcentaje"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:background="@drawable/sin_esquinas"
-                        android:indeterminate="false"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:max="100"
-                        android:progress="10" />
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/layout_separador"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:text="Rango de MABE"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"/>
 
                     <TextView
-                        style="@style/texto_h2"
-                        android:layout_weight="2"
-                        android:text="Correo: " />
+                        android:id="@+id/textview_porcentaje_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="90 %"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"/>
 
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/sSeekBarPorcentaje1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:theme="@style/MySeekBarTheme1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="90" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rango de MABE por de bajo de la competencia"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/style_line3"
+                android:layout_margin="10dp"
+                android:padding="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Rango de MABE"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textview_porcentaje_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="10 %"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/sSeekBarPorcentaje2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:theme="@style/MySeekBarTheme2"
+                    android:indeterminate="false"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:textColor="@color/colorPrimary"
+                    android:text=" Correo" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="5dp">
                     <Spinner
                         android:id="@+id/sCorreo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
-
                 </LinearLayout>
-
-                <LinearLayout
-                    style="@style/layout_separador"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/texto_h2"
-                        android:text="Grado Gravedad:"
-                        android:layout_weight="2"/>
-
-                    <Spinner
-                        android:id="@+id/sGravedad"
-                        style="@style/layout_separador"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-
-                <Button
-                    android:id="@+id/btnEnviarCorreo"
-                    style="@style/button"
-                    android:text="Aplicar Filtro" />
-
-                <Button
-                    android:id="@+id/btnOmitirFiltro"
-                    style="@style/button"
-                    android:text="Omitir Filtro" />
-
 
             </LinearLayout>
 
-        </ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
-    </android.support.v4.widget.NestedScrollView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:drawableLeft="@drawable/ic_tune"
+                    android:textColor="@color/colorPrimary"
+                    android:text=" Nivel" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="5dp">
+                    <Spinner
+                        android:id="@+id/spinner_gravedad"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+                <Button
+                    android:id="@+id/btn1filtro"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="Aplicar Filtro"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimaryDark"
+                    android:textAppearance="@style/Widget.MaterialProgressBar.ProgressBar"/>
+                <Button
+                    android:id="@+id/btn2filtro"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="Omitir Filtro"
+                    android:layout_marginLeft="2dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimaryDark"
+                    android:textAppearance="@style/Widget.MaterialProgressBar.ProgressBar"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
