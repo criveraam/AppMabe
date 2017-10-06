@@ -41,6 +41,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
     private List<ProductosModel> lista;
     private Context mContext;
     private RecyclerView mRecyclerView;
+    private int bandera;
 
     public ProductosAdapter(Context mContext, List<ProductosModel> lista, RecyclerView mRecyclerView) {
         this.lista = lista;

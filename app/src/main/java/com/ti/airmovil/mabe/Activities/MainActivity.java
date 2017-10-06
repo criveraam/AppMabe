@@ -333,27 +333,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_option, menu);
         //menu.getItem(2).setVisible(true);
-        /*menu.getItem(0).setVisible(false);
-        menu.getItem(1).setVisible(false);
-        menu.getItem(2).setVisible(false);
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {}
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        menu.getItem(0).setVisible(true);
-                        menu.getItem(1).setVisible(true);
-                        menu.getItem(2).setVisible(true);
-                    }
-                });
-            }
-        };
-        thread.start(); //start the thread*/
         return true;
     }
 

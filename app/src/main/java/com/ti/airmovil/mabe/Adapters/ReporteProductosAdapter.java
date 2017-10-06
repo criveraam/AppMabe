@@ -50,11 +50,11 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
     @Override
     public MyViewHolderA onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_reportes, parent, false);
-        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.anim_up);
+        /*Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.anim_up);
         animation.setDuration(500);
         view.setAnimation(animation);
         view.animate();
-        animation.start();
+        animation.start();*/
         return new MyViewHolderA(view);
     }
 

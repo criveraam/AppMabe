@@ -78,7 +78,7 @@ public class ReporteProductosActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         capa_progressbar = (LinearLayout) findViewById(R.id.capa_progressbar);
-        capa_contenedor = (LinearLayout) findViewById(R.id.capa_contenedor);
+        capa_contenedor = (LinearLayout) findViewById(R.id.capa_sin_conexion);
         capa_sin_conexion = (LinearLayout) findViewById(R.id.capa_sin_conexion);
         spinner_hora = (Spinner) findViewById(R.id.spinner_hora);
         List horas = new ArrayList();
@@ -157,15 +157,55 @@ public class ReporteProductosActivity extends AppCompatActivity {
         StringRequest postRequest = new StringRequest(Request.Method.POST, Config.URL_REPORTE_PRODUCTOS,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        parseJson(response);
+                    public void onResponse(final String response) {
+
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1500);
+                                } catch (InterruptedException e) {
+                                }
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        capa_progressbar.setVisibility(View.GONE);
+                                        parseJson(response);
+                                    }
+                                });
+                            }
+                        };
+                        thread.start(); //start the thread
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        capa_sin_conexion.setVisibility(View.VISIBLE);
-                        Log.d("Error.Response", error.toString());
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        capa_contenedor.setVisibility(View.VISIBLE);
+                                        capa_progressbar.setVisibility(View.GONE);
+                                        Animation animation = AnimationUtils.loadAnimation(ReporteProductosActivity.this, R.anim.anim_up);
+                                        animation.setDuration(1000);
+                                        capa_contenedor.setAnimation(animation);
+                                        capa_contenedor.animate();
+                                        animation.start();
+                                    }
+                                });
+                            }
+                        };
+                        thread.start();
                     }
                 });
         queue.add(postRequest);
@@ -251,11 +291,9 @@ public class ReporteProductosActivity extends AppCompatActivity {
     }
 
     private void initService(){
-        capa_contenedor.setVisibility(View.GONE);
         capa_progressbar.setVisibility(View.VISIBLE);
         if (Config.compruebaConexion(ReporteProductosActivity.this)) {
-            capa_progressbar.setVisibility(View.GONE);
-            capa_contenedor.setVisibility(View.VISIBLE);
+            capa_contenedor.setVisibility(View.GONE);
             getData();
         }else{
             Thread thread = new Thread() {
