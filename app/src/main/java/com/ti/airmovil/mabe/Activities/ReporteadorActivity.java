@@ -15,8 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,35 +50,74 @@ public class ReporteadorActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RequestQueue requestQueue;
     private Toolbar toolbar;
-    private LinearLayout capa1;
-    private RelativeLayout capa2;
     private int indice_hora = 0;
+    private LinearLayout capa_progressbar, capa_contenedor, capa_sin_conexion;
+    private Spinner spinner_hora;
+    private Button button_aplicar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporteador);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-
         toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-
         setSupportActionBar(toolbar);
-        initCollapsingToolbar();
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_productos);
+        capa_progressbar = (LinearLayout) findViewById(R.id.capa_progressbar);
+        capa_contenedor = (LinearLayout) findViewById(R.id.capa_sin_conexion);
+        capa_sin_conexion = (LinearLayout) findViewById(R.id.capa_sin_conexion);
+        spinner_hora = (Spinner) findViewById(R.id.spinner_hora);
+        List horas = new ArrayList();
+
+        for (int i = 0; i<24; i++){
+            if(i<10){
+                horas.add("0"+i+":00");
+            }else{
+                horas.add(i+":00");
+            }
+
+        }
+
+        ArrayAdapter spinner_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, horas);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_hora.setAdapter(spinner_adapter);
+
+        button_aplicar = (Button) findViewById(R.id.button_aplicar);
+        button_aplicar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(spinner_hora.getSelectedItem().toString().split(":").length >=2){
+                    initService();
+                    indice_hora = Integer.parseInt(spinner_hora.getSelectedItem().toString().split(":")[0]);
+                    getData();
+                }else{
+                    Toast.makeText(ReporteadorActivity.this, "Seleccione una hora para mostrar", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_productos);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
         getDatos1 = new ArrayList<>();
-
         initService();
+        initCollapsingToolbar();
     }
 
     private void initCollapsingToolbar(){
@@ -105,23 +148,16 @@ public class ReporteadorActivity extends AppCompatActivity {
     }
 
     private void initService(){
-
-        getData();
-
-        /*
-        capa1.setVisibility(View.VISIBLE);
+        capa_progressbar.setVisibility(View.VISIBLE);
         if (Config.compruebaConexion(ReporteadorActivity.this)) {
-            Log.e(TAG, "2");
-            //capa1.setVisibility(View.GONE);
-            capa2.setVisibility(View.GONE);
+            capa_contenedor.setVisibility(View.GONE);
             getData();
         }else{
-            Log.e(TAG, "3");
             Thread thread = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -129,19 +165,20 @@ public class ReporteadorActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            capa2.setVisibility(View.VISIBLE);
-                            capa1.setVisibility(View.GONE);
+                            capa_contenedor.setVisibility(View.GONE);
+                            capa_progressbar.setVisibility(View.GONE);
+                            capa_sin_conexion.setVisibility(View.VISIBLE);
                             Animation animation = AnimationUtils.loadAnimation(ReporteadorActivity.this, R.anim.anim_up);
-                            animation.setDuration(1000);
-                            capa2.setAnimation(animation);
-                            capa2.animate();
+                            animation.setDuration(3000);
+                            capa_sin_conexion.setAnimation(animation);
+                            capa_sin_conexion.animate();
                             animation.start();
                         }
                     });
                 }
             };
             thread.start();
-        }*/
+        }
     }
 
     private void getData(){
@@ -150,8 +187,8 @@ public class ReporteadorActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
-                        parseJson(response);
-                        /*Thread thread = new Thread() {
+
+                        Thread thread = new Thread() {
                             @Override
                             public void run() {
                                 try {
@@ -162,20 +199,19 @@ public class ReporteadorActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        capa1.setVisibility(View.GONE);
+                                        capa_progressbar.setVisibility(View.GONE);
                                         parseJson(response);
                                     }
                                 });
                             }
                         };
-                        thread.start(); //start the thread*/
+                        thread.start(); //start the thread
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        /*Thread thread = new Thread() {
+                        Thread thread = new Thread() {
                             @Override
                             public void run() {
                                 try {
@@ -187,18 +223,18 @@ public class ReporteadorActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        capa2.setVisibility(View.VISIBLE);
-                                        capa1.setVisibility(View.GONE);
+                                        capa_contenedor.setVisibility(View.VISIBLE);
+                                        capa_progressbar.setVisibility(View.GONE);
                                         Animation animation = AnimationUtils.loadAnimation(ReporteadorActivity.this, R.anim.anim_up);
                                         animation.setDuration(1000);
-                                        capa2.setAnimation(animation);
-                                        capa2.animate();
+                                        capa_contenedor.setAnimation(animation);
+                                        capa_contenedor.animate();
                                         animation.start();
                                     }
                                 });
                             }
                         };
-                        thread.start();*/
+                        thread.start();
                     }
                 });
         queue.add(postRequest);

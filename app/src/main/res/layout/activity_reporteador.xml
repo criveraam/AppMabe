@@ -25,28 +25,62 @@
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="50dp">
 
-                <ImageView
-                    android:id="@+id/backdrop"
+                <TextView
+                    android:id="@+id/textView_msj_filtro"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/ic_assignment"
+                    android:gravity="center_vertical"
+                    android:text=" Reporte por horas"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/style_line"
+                    android:gravity="center_vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackgroundBorderless">
+
+                        <Spinner
+                            android:id="@+id/spinner_hora"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:textAlignment="center"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button_aplicar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableLeft="@drawable/ic_done"
+                        android:gravity="center"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="35dp"
+                        android:text="Aplicar"
+                        android:textStyle="italic" />
                 </LinearLayout>
-            </RelativeLayout>
+
+            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar2"
@@ -59,7 +93,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/contenedor_reporte" />
 
 
 

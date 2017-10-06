@@ -1,6 +1,7 @@
 package com.ti.airmovil.mabe.Activities;
 
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -72,10 +73,8 @@ public class ReporteProductosActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         capa_progressbar = (LinearLayout) findViewById(R.id.capa_progressbar);
         capa_contenedor = (LinearLayout) findViewById(R.id.capa_sin_conexion);
@@ -101,6 +100,8 @@ public class ReporteProductosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //startActivity(new Intent(ReporteProductosActivity.this, SplashActivity.class));
+
                 if(spinner_hora.getSelectedItem().toString().split(":").length >=2){
                     initService();
                     indice_hora = Integer.parseInt(spinner_hora.getSelectedItem().toString().split(":")[0]);
@@ -108,6 +109,7 @@ public class ReporteProductosActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(ReporteProductosActivity.this, "Seleccione una hora para mostrar", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
