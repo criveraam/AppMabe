@@ -61,7 +61,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation3;
         setContentView(R.layout.activity_test);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

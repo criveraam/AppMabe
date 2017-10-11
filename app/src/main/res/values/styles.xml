@@ -25,6 +25,16 @@
         <item name="android:windowExitAnimation">@anim/anim_down</item>
     </style>
 
+    <style name="DialogAnimation2">
+        <item name="android:windowEnterAnimation">@anim/anim_left</item>
+        <item name="android:windowExitAnimation">@anim/anim_right</item>
+    </style>
+
+    <style name="DialogAnimation3">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
     <style name="DialogAnimationDown">
         <item name="android:windowEnterAnimation">@anim/anim_down</item>
         <item name="android:windowExitAnimation">@anim/anim_up</item>

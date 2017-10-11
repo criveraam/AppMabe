@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation3;
         setContentView(R.layout.activity_splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

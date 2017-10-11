@@ -1,5 +1,6 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +34,7 @@ import java.util.List;
 public class FiltroActivity extends AppCompatActivity {
     private List<String> porcentajes, correos, gravedad;
     private CoordinatorLayout layoutFiltro;
+    public static Activity FA3;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -39,8 +42,10 @@ public class FiltroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation3;
         setContentView(R.layout.activity_filtro);
+
+        FA3 = this;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

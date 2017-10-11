@@ -68,7 +68,7 @@ public class ReporteProductosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_productos);
 
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation3;
 
         MainActivity.FA1.finish();
         FA2 = this;
@@ -122,7 +122,14 @@ public class ReporteProductosActivity extends AppCompatActivity {
             }
         });
 
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        ((Button) findViewById(R.id.button_refrescar)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initService();
+            }
+        });
+
+        //getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_productos);
         layoutManager = new LinearLayoutManager(this);
@@ -322,7 +329,7 @@ public class ReporteProductosActivity extends AppCompatActivity {
                             capa_progressbar.setVisibility(View.GONE);
                             capa_sin_conexion.setVisibility(View.VISIBLE);
                             Animation animation = AnimationUtils.loadAnimation(ReporteProductosActivity.this, R.anim.anim_up);
-                            animation.setDuration(3000);
+                            animation.setDuration(1000);
                             capa_sin_conexion.setAnimation(animation);
                             capa_sin_conexion.animate();
                             animation.start();

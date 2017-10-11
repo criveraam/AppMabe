@@ -82,12 +82,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation3;
 
         FA1 = this;
 
         try{
             ReporteProductosActivity.FA2.finish();
+            FiltroActivity.FA3.finish();
         }catch (Exception e){
             e.printStackTrace();
         }

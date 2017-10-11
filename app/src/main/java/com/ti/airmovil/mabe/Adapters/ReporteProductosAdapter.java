@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ti.airmovil.mabe.Dialog.CustomBottomSheetDialogFragment;
@@ -50,17 +51,21 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
     @Override
     public MyViewHolderA onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_reportes, parent, false);
-        /*Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.anim_up);
+        Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.anim_up);
         animation.setDuration(500);
         view.setAnimation(animation);
         view.animate();
-        animation.start();*/
+        animation.start();
         return new MyViewHolderA(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolderA holder, int position) {
         final ReporteProductosModel lists = lista.get(position);
+        holder.textView_numerador_reporte_productos.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
+        holder.textView_nombre_producto.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
+        holder.linearLayoutContenedorImg.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
+        holder.linearLayoutContenedorPrecios.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_left));
         holder.textView_numerador_reporte_productos.setText(String.valueOf(position + 1));
         holder.textView_nombre_producto.setText(lists.getNombreProducto());
         holder.textView_precio_mabe.setText(lists.getPrecioMabe());
@@ -92,6 +97,8 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
         private TextView textView_walmart_porcentaje;
         private TextView textView_bestbay_precio;
         private TextView textView_bestbuy_porcentaje;
+        private LinearLayout linearLayoutContenedorImg;
+        private LinearLayout linearLayoutContenedorPrecios;
         public MyViewHolderA(View itemView) {
             super(itemView);
             cardView_contenedor = (CardView) itemView.findViewById(R.id.card_view_list_productos);
@@ -102,6 +109,8 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
             textView_walmart_porcentaje = (TextView) itemView.findViewById(R.id.textView_walmart_porcentaje);
             textView_bestbay_precio = (TextView) itemView.findViewById(R.id.textView_bestbay_precio);
             textView_bestbuy_porcentaje = (TextView) itemView.findViewById(R.id.textView_bestbuy_porcentaje);
+            linearLayoutContenedorImg = (LinearLayout) itemView.findViewById(R.id.contenedor_imagenes);
+            linearLayoutContenedorPrecios = (LinearLayout) itemView.findViewById(R.id.contenedor_precios);
         }
     }
 }
