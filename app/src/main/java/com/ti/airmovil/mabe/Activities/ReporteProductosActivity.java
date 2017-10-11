@@ -1,5 +1,6 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -58,6 +59,7 @@ public class ReporteProductosActivity extends AppCompatActivity {
     private LinearLayout capa_progressbar, capa_contenedor, capa_sin_conexion;
     private Spinner spinner_hora;
     private Button button_aplicar;
+    public static Activity FA2;
 
 
 
@@ -66,14 +68,17 @@ public class ReporteProductosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_productos);
 
+        getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
         MainActivity.FA1.finish();
+        FA2 = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reportes);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                startActivity(new Intent().setClass(ReporteProductosActivity.this, MainActivity.class));
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

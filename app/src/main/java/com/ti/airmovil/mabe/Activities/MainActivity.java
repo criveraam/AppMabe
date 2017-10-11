@@ -86,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
         FA1 = this;
 
+        try{
+            ReporteProductosActivity.FA2.finish();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         getDatos1 = new ArrayList<>();
