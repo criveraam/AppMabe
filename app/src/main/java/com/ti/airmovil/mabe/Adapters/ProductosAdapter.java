@@ -88,6 +88,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
             public void onClick(View view) {
                 Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
                 Intent intent = new Intent(view.getContext(), TestActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtra("id_producto", lists.getIdProducto());
                 view.getContext().startActivity(intent);
             }
@@ -98,6 +99,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
             public void onClick(View view) {
                 Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
                 Intent intent = new Intent(view.getContext(), TestActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtra("id_producto", lists.getIdProducto());
                 view.getContext().startActivity(intent);
             }

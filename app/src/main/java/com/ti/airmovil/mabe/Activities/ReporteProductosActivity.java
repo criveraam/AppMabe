@@ -65,6 +65,9 @@ public class ReporteProductosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporte_productos);
+
+        MainActivity.FA1.finish();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reportes);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

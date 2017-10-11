@@ -1,5 +1,6 @@
 package com.ti.airmovil.mabe.Activities;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout capa1;
     private RelativeLayout capa2;
     private LinearLayout bottomSheetLayout;
-
+    public static Activity FA1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        FA1 = this;
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -121,7 +124,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+    }
 
     private void initService(){
         capa1.setVisibility(View.VISIBLE);
