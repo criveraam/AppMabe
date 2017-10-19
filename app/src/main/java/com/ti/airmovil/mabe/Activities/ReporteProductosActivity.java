@@ -42,9 +42,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ReporteProductosActivity extends AppCompatActivity {
@@ -88,6 +91,18 @@ public class ReporteProductosActivity extends AppCompatActivity {
         capa_contenedor = (LinearLayout) findViewById(R.id.capa_sin_conexion);
         capa_sin_conexion = (LinearLayout) findViewById(R.id.capa_sin_conexion);
         spinner_hora = (Spinner) findViewById(R.id.spinner_hora);
+
+        TextView textViewFecha = (TextView) findViewById(R.id.textView_msj_filtro);
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+
+        textViewFecha.setText(getYesterdayDateString());
+        //textViewFecha.setText("Reporte horas día" + day+"-"+month+"-"+year+"");
+
         List horas = new ArrayList();
 
         for (int i = 0; i<24; i++){
@@ -140,6 +155,17 @@ public class ReporteProductosActivity extends AppCompatActivity {
         getDatos1 = new ArrayList<>();
         initService();
         initCollapsingToolbar();
+    }
+
+    private Date yesterday() {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
+    private String getYesterdayDateString()  {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        return dateFormat.format(yesterday());
     }
 
     private void initCollapsingToolbar(){
@@ -280,6 +306,7 @@ public class ReporteProductosActivity extends AppCompatActivity {
                         colorBestBuy = Color.parseColor("#FF0000");
                     }
 
+
                     getDatos2.setNombreProducto(producto.getString("4"));
                     getDatos2.setPrecioMabe("$ "+m);
                     getDatos2.setPrecioWalmart("$ "+w);
@@ -288,17 +315,15 @@ public class ReporteProductosActivity extends AppCompatActivity {
                     getDatos2.setPorcentajeBestBuy(porcentaje_best_buy+" %");
                     getDatos2.setColorWalmart(colorWalmart);
                     getDatos2.setColorBestBuy(colorBestBuy);
+                    int id = i;
+                    getDatos2.setCrawler(String.valueOf(id));
 
-                    Log.e(TAG, "INFORMACION Mabe::::>" + precios_mabe);
-                    Log.e(TAG, "INFORMACION Walmart::::>" + precios_wallmart);
-                    Log.e(TAG, "INFORMACION Best Buy::::>" + precios_best_buy);
 
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
                 getDatos1.add(getDatos2);
             }
-            Log.e(TAG, "Conversion a JSONObjet::: " + obj);
         }catch (JSONException e){
             e.printStackTrace();
         }

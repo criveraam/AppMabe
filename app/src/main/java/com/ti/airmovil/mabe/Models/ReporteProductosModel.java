@@ -13,6 +13,15 @@ public class ReporteProductosModel {
     private String porcentajeBestBuy;
     private int colorWalmart;
     private int colorBestBuy;
+    private String crawler;
+
+    public String getCrawler() {
+        return crawler;
+    }
+
+    public void setCrawler(String crawler) {
+        this.crawler = crawler;
+    }
 
     public String getNombreProducto() {return nombreProducto;}
     public void setNombreProducto(String nombreProducto) {this.nombreProducto = nombreProducto;}

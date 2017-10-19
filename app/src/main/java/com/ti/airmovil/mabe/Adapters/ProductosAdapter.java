@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ti.airmovil.mabe.Activities.DetalleActivity;
 import com.ti.airmovil.mabe.Activities.MainActivity;
@@ -87,22 +88,31 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
         holder.imageViewProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
-                Intent intent = new Intent(view.getContext(), TestActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                intent.putExtra("id_producto", lists.getIdProducto());
-                view.getContext().startActivity(intent);
+
+                if(Config.compruebaConexion(mContext)){
+                    Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
+                    Intent intent = new Intent(view.getContext(), TestActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    intent.putExtra("id_producto", lists.getIdProducto());
+                    view.getContext().startActivity(intent);
+                }else{
+                    Toast.makeText(mContext, "No hay conexion a internet", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
-        holder.imageViewSubmenu.setOnClickListener(new View.OnClickListener() {
+        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
-                Intent intent = new Intent(view.getContext(), TestActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                intent.putExtra("id_producto", lists.getIdProducto());
-                view.getContext().startActivity(intent);
+                if(Config.compruebaConexion(mContext)){Log.e(TAG, "ID DEL PRODUCTO::: " + lists.getIdProducto());
+                    Intent intent = new Intent(view.getContext(), TestActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    intent.putExtra("id_producto", lists.getIdProducto());
+                    view.getContext().startActivity(intent);
+                }else{
+                    Toast.makeText(mContext, "No hay conexion a internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

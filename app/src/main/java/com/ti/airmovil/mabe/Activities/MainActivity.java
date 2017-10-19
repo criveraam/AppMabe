@@ -107,8 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         initCollapsingToolbar();
-        columns(2);
-        initService();
+
 
 
         Button btnRefresh = (Button) findViewById(R.id.button_refrescar);
@@ -135,6 +134,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        columns(2);
+        initService();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        columns(2);
+        initService();
     }
 
     private void initService(){

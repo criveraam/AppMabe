@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityGroup;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,9 +24,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ti.airmovil.mabe.Activities.TestActivity;
 import com.ti.airmovil.mabe.Dialog.CustomBottomSheetDialogFragment;
 import com.ti.airmovil.mabe.Dialog.DialogoDetalle;
+import com.ti.airmovil.mabe.Helper.Config;
 import com.ti.airmovil.mabe.Models.ProductosModel;
 import com.ti.airmovil.mabe.Models.ReporteProductosModel;
 import com.ti.airmovil.mabe.R;
@@ -78,7 +82,21 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
         holder.cardView_contenedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("***", "VIEW:::>");
+                if(Config.compruebaConexion(mContext)){
+                    Intent intent = new Intent(view.getContext(), TestActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    if(Integer.parseInt(lists.getCrawler()) == 0) intent.putExtra("id_producto", "11");
+                    if(Integer.parseInt(lists.getCrawler()) == 1) intent.putExtra("id_producto", "12");
+                    if(Integer.parseInt(lists.getCrawler()) == 3) intent.putExtra("id_producto", "8");
+                    if(Integer.parseInt(lists.getCrawler()) == 4) intent.putExtra("id_producto", "12");
+                    if(Integer.parseInt(lists.getCrawler()) == 5) intent.putExtra("id_producto", "10");
+                    if(Integer.parseInt(lists.getCrawler()) == 6) intent.putExtra("id_producto", "16");
+                    if(Integer.parseInt(lists.getCrawler()) == 7) intent.putExtra("id_producto", "18");
+                    view.getContext().startActivity(intent);
+                }else{
+                    Toast.makeText(mContext, "No hay conexion a internet", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

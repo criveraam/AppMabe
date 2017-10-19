@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="235dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -25,62 +25,100 @@
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="50dp">
-
-                <TextView
-                    android:id="@+id/textView_msj_filtro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/ic_assignment"
-                    android:gravity="center_vertical"
-                    android:text=" Reporte por horas"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_vertical"
+                    android:id="@+id/linearLayout">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textStyle="bold"
+                        android:paddingLeft="55dp"
+                        android:textSize="18dp"
+                        android:text="Filtros de Busqueda" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/style_line"
-                    android:gravity="center_vertical">
+                    android:layout_centerInParent="true"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@android:color/white"
+                        android:layout_marginLeft="50dp"
+                        android:gravity="center"
+                        android:layout_marginRight="50dp"
+                        android:text="Reporte de productos "/>
+                    <TextView
+                        android:id="@+id/textView_msj_filtro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="mabe"
+                        android:textSize="35dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:drawableLeft="@drawable/ic_date_range"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginRight="70dp"
+                        android:gravity="center"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="?attr/selectableItemBackgroundBorderless">
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/style_line"
+                        android:gravity="center_vertical">
 
-                        <Spinner
-                            android:id="@+id/spinner_hora"
-                            android:layout_width="70dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
                             android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="10dp"
-                            android:textAlignment="center"
-                            android:textSize="20dp" />
-                    </LinearLayout>
+                            android:background="?attr/selectableItemBackgroundBorderless">
 
-                    <Button
-                        android:id="@+id/button_aplicar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorPrimaryDark"
-                        android:drawableLeft="@drawable/ic_done"
-                        android:gravity="center"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="35dp"
-                        android:text="Aplicar"
-                        android:textStyle="italic" />
+                            <Spinner
+                                android:id="@+id/spinner_hora"
+                                android:layout_width="70dp"
+                                android:layout_height="match_parent"
+                                android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:textAlignment="center"
+                                android:textSize="20dp" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/button_aplicar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimaryDark"
+                            android:drawableLeft="@drawable/ic_done"
+                            android:gravity="center"
+                            android:paddingLeft="25dp"
+                            android:paddingRight="35dp"
+                            android:text="Aplicar"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_reportes"

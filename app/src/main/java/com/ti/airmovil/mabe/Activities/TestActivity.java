@@ -99,12 +99,12 @@ public class TestActivity extends AppCompatActivity {
         getData();
         initCollapsingToolbar();
 
-        linearLayoutInfo.setOnClickListener(new View.OnClickListener() {
+        /*linearLayoutInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 appBarLayout.setExpanded(false);
             }
-        });
+        });*/
 
         buttonCerrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,9 +172,13 @@ public class TestActivity extends AppCompatActivity {
 
             textViewTitulo.setText(titulo);
             textViewDescripcion.setText(descripcion);
-            textViewPrecio1.setText(Config.nf.format(Double.parseDouble(precio_mabe)));
-            textViewPrecio2.setText(Config.nf.format(Double.parseDouble(precio_walmart)));
-            textViewPrecio3.setText(Config.nf.format(Double.parseDouble(precio_bestbuy)));
+            try {
+                textViewPrecio1.setText(Config.nf.format(Double.parseDouble(precio_mabe)));
+                textViewPrecio2.setText(Config.nf.format(Double.parseDouble(precio_walmart)));
+                textViewPrecio3.setText(Config.nf.format(Double.parseDouble(precio_bestbuy)));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             //Config.imagenDetalle = imagen;
             Log.e(TAG, "IMAGEN A MOSTRAT EN COLLAPSING::: " + imagen);
@@ -197,7 +201,7 @@ public class TestActivity extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
+                    collapsingToolbar.setTitle("Detalle del producto");
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
