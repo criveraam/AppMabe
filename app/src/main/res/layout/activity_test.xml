@@ -245,8 +245,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/contenido_precios"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical"
                     android:layout_marginTop="30dp"
                     android:background="#f1f1f1">

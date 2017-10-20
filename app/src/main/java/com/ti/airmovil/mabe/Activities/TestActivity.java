@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -48,6 +49,7 @@ public class TestActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private String idProducto;
     private String imageEnvio;
+    private String contenido;
     private ImageView imageViewProducto;
     private TextView textViewTitulo1, textViewTitulo2, textViewTitulo3;
     private ImageView imageViewIcon1, imageViewIcon2, imageViewIcon3;
@@ -57,6 +59,7 @@ public class TestActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private LinearLayout linearLayoutInfo;
     private Button buttonCerrar;
+    private LinearLayout contenidoPrecios;
     boolean banderaFoto = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class TestActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_detalle);
         linearLayoutInfo = (LinearLayout) findViewById(R.id.linearlayout_info);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        contenidoPrecios = (LinearLayout) findViewById(R.id.contenido_precios);
         collapsingToolbar.setTitle(" ");
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);
@@ -93,8 +97,20 @@ public class TestActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("id_producto")!= null){
             idProducto = bundle.getString("id_producto");
-            Log.e(TAG, "Parametro obtenido del envio a esta actividad ::: " + idProducto);
+            int valores = bundle.getInt("contenido");
+            Log.e(TAG, "Parametro obtenido del ::: " + valores);
+
+            if(bundle.getInt("contenido") == 1)
+                contenidoPrecios.setVisibility(View.VISIBLE);
+
+            if(bundle.getInt("contenido") == 2) {
+                contenidoPrecios.setVisibility(View.GONE);
+            }
+
+
         }
+
+
 
         getData();
         initCollapsingToolbar();

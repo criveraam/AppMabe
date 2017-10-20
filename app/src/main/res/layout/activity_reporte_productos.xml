@@ -63,18 +63,25 @@
                         android:gravity="center"
                         android:layout_marginRight="50dp"
                         android:text="Reporte de productos "/>
-                    <TextView
-                        android:id="@+id/textView_msj_filtro"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="mabe"
-                        android:textSize="35dp"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:drawableLeft="@drawable/ic_date_range"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginRight="70dp"
-                        android:gravity="center"/>
+                        android:background="@drawable/style_line"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:padding="7dp"
+
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/textView_msj_filtro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+                            android:drawableLeft="@drawable/ic_date_range" />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"

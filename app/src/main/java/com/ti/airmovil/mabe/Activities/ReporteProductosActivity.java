@@ -100,7 +100,9 @@ public class ReporteProductosActivity extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
 
-        textViewFecha.setText(getYesterdayDateString());
+        //textViewFecha.setText(getYesterdayDateString());
+        textViewFecha.setText(Config.fechaActual());
+        Config.dialogoFechaInicio(this, textViewFecha); // Dialogo de muestra de fecha
         //textViewFecha.setText("Reporte horas día" + day+"-"+month+"-"+year+"");
 
         List horas = new ArrayList();

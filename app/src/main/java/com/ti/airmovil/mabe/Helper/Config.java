@@ -1,12 +1,17 @@
 package com.ti.airmovil.mabe.Helper;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 /**
@@ -35,5 +40,35 @@ public class Config {
             }
         }
         return connected;
+    }
+
+    public static String fechaActual(){
+        Calendar calendar = Calendar.getInstance();
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+        int mes = calendar.get(Calendar.MONTH);
+        int anio = calendar.get(Calendar.YEAR);
+        return String.valueOf(dia)+"-"+String.valueOf(mes +1)+"-"+String.valueOf(anio);
+    }
+
+    public static void dialogoFechaInicio(final Context context, final TextView textView){
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog;
+                Calendar calendar = Calendar.getInstance();
+                int dia = calendar.get(Calendar.DAY_OF_MONTH);
+                int mes = calendar.get(Calendar.MONTH);
+                int anio = calendar.get(Calendar.YEAR);
+                datePickerDialog = new DatePickerDialog(context,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                textView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                //fechaIni = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                            }
+                        }, anio, mes, dia);
+                datePickerDialog.show();
+            }
+        });
     }
 }

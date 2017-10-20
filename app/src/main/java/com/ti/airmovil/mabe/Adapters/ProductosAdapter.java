@@ -94,6 +94,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
                     Intent intent = new Intent(view.getContext(), TestActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.putExtra("id_producto", lists.getIdProducto());
+                    intent.putExtra("contenido", 1);
                     view.getContext().startActivity(intent);
                 }else{
                     Toast.makeText(mContext, "No hay conexion a internet", Toast.LENGTH_SHORT).show();
@@ -109,6 +110,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.MyVi
                     Intent intent = new Intent(view.getContext(), TestActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     intent.putExtra("id_producto", lists.getIdProducto());
+                    intent.putExtra("contenido", 1);
                     view.getContext().startActivity(intent);
                 }else{
                     Toast.makeText(mContext, "No hay conexion a internet", Toast.LENGTH_SHORT).show();

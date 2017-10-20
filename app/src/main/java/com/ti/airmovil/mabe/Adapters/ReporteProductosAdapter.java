@@ -92,6 +92,8 @@ public class ReporteProductosAdapter extends RecyclerView.Adapter<ReporteProduct
                     if(Integer.parseInt(lists.getCrawler()) == 5) intent.putExtra("id_producto", "10");
                     if(Integer.parseInt(lists.getCrawler()) == 6) intent.putExtra("id_producto", "16");
                     if(Integer.parseInt(lists.getCrawler()) == 7) intent.putExtra("id_producto", "18");
+
+                    intent.putExtra("contenido", 2);
                     view.getContext().startActivity(intent);
                 }else{
                     Toast.makeText(mContext, "No hay conexion a internet", Toast.LENGTH_SHORT).show();
